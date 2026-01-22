@@ -2,6 +2,8 @@ package se.kth.dd2480.group15.model;
 
 public class LicEvaluator {
 
+    public static final double PI = 3.1415926535;
+
     public boolean Lic0() {
         // TODO Implement functionality
         return false;
