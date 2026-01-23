@@ -1,16 +1,64 @@
 package se.kth.dd2480.group15.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 class LicEvaluatorTest {
 
+    /**
+     * Verifies that {@code Lic0} returns {@code true} when at least one pair 
+     * of consecutive points exceeds the specified distance threshold.
+     * <p>
+     * Test setup: Uses a configuration where the distance (5.0)
+     * is strictly greater than the length threshold (4.0).
+     * </p>
+     */
     @Test
     void lic0_validInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(1,1), new Point(4,5)};
+        double length1 = 3.0;
+        int numpoints = 2;
+
+        assertTrue(evaluator.Lic0(numpoints, points, length1));
     }
 
+    /**
+     * Verifies that {@code Lic0} returns {@code false} when the distance between
+     * consecutive points is less than the specified threshold.
+     * <p>
+     * Test setup: Points are 5.0 units apart, and the threshold is 6.0.
+     * </p>
+     */
     @Test
     void lic0_invalidInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(1,1), new Point(4,5)};
+        double length1 = 6.0;
+        int numpoints = 2;
+
+        assertFalse(evaluator.Lic0(numpoints, points, length1));
+    }
+
+    /**
+     * Verifies the "strictly greater than" requirement of LIC0.
+     * <p>
+     * If the distance is exactly equal to {@code length1}, the condition 
+     * should not be met.
+     * </p>
+     */
+    @Test
+    void lic0_singlePoint() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(1,1)};
+        double length1 = 2.0;
+        int numpoints = 1;
+
+        assertFalse(evaluator.Lic0(numpoints, points, length1));
     }
 
     @Test
