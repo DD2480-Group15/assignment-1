@@ -5,18 +5,16 @@ public class LicEvaluator {
     public static final double PI = 3.1415926535;
 
     public boolean Lic0(int numpoints, Point[] pt, double length1) {
-        /*
-        Input: 
-            n (integer, the number of data points)
-            pt (array, contains (x,y) coordinates for each data point)
-            length1 (double, a given length)
-        
-        Output: 
-            boolean (true if condition is met, false otherwise)
-
-        Functionality: 
-            Checks if there exists at least one set of two consecutive data points that are a distance greater than the length, LENGTH1, apart.
-        */
+        /**
+         * Checks if there exists at least one set of two consecutive data points 
+         * that are a distance greater than the specified length.
+         *
+         * @param numpoints The number of data points in the array.
+         * @param pt        An array containing the (x,y) coordinates for each point.
+         * @param length1   The threshold distance (must be non-negative).
+         * @return {@code true} if any two consecutive points are further apart than length1; 
+         * {@code false} otherwise.
+         */
 
         for (int i = 0; i < numpoints-1; i++) {
             double dist_x = pt[i+1].x() - pt[i].x();

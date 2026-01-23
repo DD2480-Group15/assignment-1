@@ -6,10 +6,16 @@ import org.junit.jupiter.api.Test;
 
 class LicEvaluatorTest {
 
+    /**
+     * Verifies that {@code Lic0} returns {@code true} when at least one pair 
+     * of consecutive points exceeds the specified distance threshold.
+     * <p>
+     * Test setup: Uses a configuration where the distance (5.0)
+     * is strictly greater than the length threshold (4.0).
+     * </p>
+     */
     @Test
     void lic0_validInput() {
-        // Distance between (1,1) and (4,5) is sqrt((4-1)^2 + (5-1)^2) = sqrt(9+16) = 5
-        // length1 = 3 and 5 > 3, so should be true
         LicEvaluator evaluator = new LicEvaluator();
 
         Point[] points = {new Point(1,1), new Point(4,5)};
@@ -19,10 +25,15 @@ class LicEvaluatorTest {
         assertTrue(evaluator.Lic0(numpoints, points, length1));
     }
 
+    /**
+     * Verifies that {@code Lic0} returns {@code false} when the distance between
+     * consecutive points is less than the specified threshold.
+     * <p>
+     * Test setup: Points are 5.0 units apart, and the threshold is 6.0.
+     * </p>
+     */
     @Test
     void lic0_invalidInput() {
-        // Distance between (1,1) and (4,5) is sqrt((4-1)^2 + (5-1)^2) = sqrt(9+16) = 5
-        // length1 = 6 and 5 < 6, so should be false
         LicEvaluator evaluator = new LicEvaluator();
 
         Point[] points = {new Point(1,1), new Point(4,5)};
@@ -32,9 +43,15 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic0(numpoints, points, length1));
     }
 
+    /**
+     * Verifies the "strictly greater than" requirement of LIC0.
+     * <p>
+     * If the distance is exactly equal to {@code length1}, the condition 
+     * should not be met.
+     * </p>
+     */
     @Test
     void lic0_singlePoint() {
-        // if there is only a single point to evaluate, function should return false and not some error.
         LicEvaluator evaluator = new LicEvaluator();
 
         Point[] points = {new Point(1,1)};
