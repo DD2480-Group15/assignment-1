@@ -67,6 +67,22 @@ class LicEvaluatorTest {
 
     @Test
     void lic11() {
+        // Test case where there are two points separated by G_PTS with decreasing x-coordinates
+        Point[] points = {new Point(1, 2), new Point(3, 4), new Point(5, 6), new Point(2, 5)};
+        LicEvaluator evaluator = new LicEvaluator();
+        assertTrue(evaluator.Lic11(4, points, 2));  
+
+        // Test case where there are no two points separated by G_PTS with decreasing x-coordinates
+        Point[] points2 = {new Point(1, 2), new Point(2, 4), new Point(1, 5), new Point(4, 6)};     
+        assertFalse(evaluator.Lic11(4, points2, 2));
+
+        // Test case where NUMPOINTS < 3
+        Point[] points3 = {new Point(1, 2), new Point(3, 4)};
+        assertFalse(evaluator.Lic11(2, points3, 1));
+
+        // not meet 1 ≤G_PTS ≤NUMPOINTS−2
+        Point[] points4 = {new Point(1, 2), new Point(3, 4), new Point(5, 6)};
+        assertFalse(evaluator.Lic11(3, points4, 2));
     }
 
     @Test

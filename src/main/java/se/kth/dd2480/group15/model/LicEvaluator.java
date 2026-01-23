@@ -71,8 +71,26 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic11() {
-        // TODO Implement functionality
+    public boolean Lic11(int numpoints, Point[] pt, int g) {
+        /* 
+        Input: n (integer, number of data points), 
+               pt (arrays of Point containing the x and y coordinates of the data points)
+               g (integer, G_PTS)
+
+        Output: boolean (true if the condition is met, false otherwise)       
+        
+        Functionality: There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), separated by
+        exactly G_PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) The
+        condition is not met when NUMPOINTS < 3.
+        1 ≤G_PTS ≤NUMPOINTS−2
+        */
+
+        if(g < 1 || g > numpoints - 2 || numpoints < 3)
+            return false;
+
+        for(int i=0; i<numpoints-g; i++)
+            if(pt[i+g].x() - pt[i].x() < 0)
+                return true;
         return false;
     }
 
