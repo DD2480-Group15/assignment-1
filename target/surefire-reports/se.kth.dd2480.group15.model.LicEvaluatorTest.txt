@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: se.kth.dd2480.group15.model.LicEvaluatorTest
--------------------------------------------------------------------------------
-Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.089 s -- in se.kth.dd2480.group15.model.LicEvaluatorTest

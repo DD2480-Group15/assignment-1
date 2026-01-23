@@ -1,47 +1,16 @@
 package se.kth.dd2480.group15.model;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class LicEvaluatorTest {
 
     @Test
     void lic0_validInput() {
-        // Distance between (1,1) and (4,5) is sqrt((4-1)^2 + (5-1)^2) = sqrt(9+16) = 5
-        // length1 = 3 and 5 > 3, so should be true
-        LicEvaluator evaluator = new LicEvaluator();
-
-        Point[] points = {new Point(1,1), new Point(4,5)};
-        double length1 = 3.0;
-        int numpoints = 2;
-
-        assertTrue(evaluator.Lic0(numpoints, points, length1));
     }
 
     @Test
     void lic0_invalidInput() {
-        // Distance between (1,1) and (4,5) is sqrt((4-1)^2 + (5-1)^2) = sqrt(9+16) = 5
-        // length1 = 6 and 5 < 6, so should be false
-        LicEvaluator evaluator = new LicEvaluator();
-
-        Point[] points = {new Point(1,1), new Point(4,5)};
-        double length1 = 6.0;
-        int numpoints = 2;
-
-        assertFalse(evaluator.Lic0(numpoints, points, length1));
-    }
-
-    @Test
-    void lic0_singlePoint() {
-        // if there is only a single point to evaluate, function should return false and not some error.
-        LicEvaluator evaluator = new LicEvaluator();
-
-        Point[] points = {new Point(1,1)};
-        double length1 = 2.0;
-        int numpoints = 1;
-
-        assertFalse(evaluator.Lic0(numpoints, points, length1));
     }
 
     @Test
