@@ -77,21 +77,39 @@ class LicEvaluatorTest {
     void lic4() {
     }
 
+    /**
+     * Test case where there are two consecutive points with decreasing x-coordinates.
+     * Expecting the function to return true
+    */
     @Test
-    void lic5() {
-        // Test case where there are two consecutive points with decreasing x-coordinates
+    void lic5_returnsTrue() {
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(2, 5)};
         LicEvaluator evaluator = new LicEvaluator();
         assertTrue(evaluator.Lic5(3, points));
-
-        // Test case where there are no two consecutive points with decreasing x-coordinates
-        Point[] points2 = {new Point(1, 2), new Point(2, 4), new Point(5, 6)};
-        assertFalse(evaluator.Lic5(3, points2));
-
-        // Test case with only one point
-        Point[] points3 = {new Point(5, 2)};
-        assertFalse(evaluator.Lic5(1, points3));
     }
+
+    /**
+     * Test case where there are no two consecutive points with decreasing x-coordinates
+     * Expecting the function to return false
+    */
+    @Test
+    void lic5_returnsFalse() {
+        Point[] points = {new Point(1, 2), new Point(2, 4), new Point(2, 6)};
+        LicEvaluator evaluator = new LicEvaluator();
+        assertFalse(evaluator.Lic5(3, points));
+    }
+
+    /**
+     * Test case with only one point.
+     * Expecting the function to return false
+    */
+    @Test
+    void lic5_onePoint_returnsFalse() {
+        Point[] points = {new Point(5, 2)};
+        LicEvaluator evaluator = new LicEvaluator();
+        assertFalse(evaluator.Lic5(1, points));
+    }
+
 
     @Test
     void lic6() {
