@@ -127,9 +127,32 @@ public class LicEvaluator {
         // TODO Implement functionality
         return false;
     }
-
-    public boolean[] evaluateLics() {
-        // TODO Implement functionality
-        return new  boolean[0];
+    
+    /**
+    * Returns an array of boolean values indicating whether each of the 15 LICs is satisfied.
+    *
+    * @param  numpoints the number of data points
+    * @param  pt        an array of Point objects representing the data points
+    * @param  params    a Parameters object containing the necessary parameters for LIC evaluation
+    * @return      an array of boolean values where each index corresponds to a LIC (0-14)
+    */
+    public boolean[] evaluateLics(int numpoints, Point[] pt, Parameters params) {
+        boolean results[] = new boolean[15];
+        results[0] = Lic0(numpoints, pt, params.length1());
+        results[1] = Lic1();
+        results[2] = Lic2();
+        results[3] = Lic3();
+        results[4] = Lic4();            
+        results[5] = Lic5(numpoints, pt);
+        results[6] = Lic6();
+        results[7] = Lic7();
+        results[8] = Lic8();
+        results[9] = Lic9();
+        results[10] = Lic10();
+        results[11] = Lic11(numpoints, pt, params.gPts());
+        results[12] = Lic12();
+        results[13] = Lic13();
+        results[14] = Lic14();
+        return results;
     }
 }

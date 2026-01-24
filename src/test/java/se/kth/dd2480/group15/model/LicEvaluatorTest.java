@@ -176,7 +176,21 @@ class LicEvaluatorTest {
     void lic14() {
     }
 
+    /**
+    * Test the functionality of evaluateLics method by providing a set of points and parameters,
+    * and verifying that the returned boolean array has the correct length of 15.
+    */
     @Test
     void evaluateLics() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {new Point(1,1), new Point(4,5)};
+        int numpoints = 2;
+        Parameters params = Parameters.builder()
+                .length1(3) // Set parameter values
+                .radius1(1)
+                .cPts(2)
+                .build();  
+        boolean[] results = evaluator.evaluateLics(numpoints, points, params);
+        assertTrue(results.length == 15);
     }
 }
