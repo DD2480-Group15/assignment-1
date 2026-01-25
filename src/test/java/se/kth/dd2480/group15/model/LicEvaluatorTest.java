@@ -146,8 +146,70 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic11(2, points, 1));
     }
 
+    /**
+     * Verifies that {@code Lic12} returns {@code true} when there is at least one 
+     * pair separated by {@code kPts} further than {@code length1} and another 
+     * pair further than {@code kPts} closer than {@code length2}. Both parts
+     * must be true for the condition to be met.
+     * <p>
+     * Test setup: Pair (0,0)-(5,0) is dist 5.0 (>4.0), and pair (1,1)-(2,1) 
+     * is dist 1.0 (<2.0). Both conditions are satisfied.
+     * </p>
+     */
     @Test
-    void lic12() {
+    void lic12_validInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(1,1), new Point(5,0), new Point(2,1)};
+        int numpoints = 4;
+        int kPts = 1;
+        double length1 = 4.0;
+        double length2 = 2.0;
+
+        assertTrue(evaluator.Lic12(numpoints, points, kPts, length1, length2));
+    }
+
+    /**
+     * Verifies that {@code Lic12} returns {@code false} when only one of the 
+     * two required distance conditions is satisfied.
+     * <p>
+     * Test setup: All pairs have a distance of 5.0. While 5.0 is greater than 
+     * {@code length1} (4.0), no pair is less than {@code length2} (2.0).
+     * </p>
+     */
+    @Test
+    void lic12_invalidInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(0,0), new Point(5,0), new Point(5,0)};
+        int numpoints = 4;
+        int kPts = 1;
+        double length1 = 4.0;
+        double length2 = 2.0;
+
+        assertFalse(evaluator.Lic12(numpoints, points, kPts, length1, length2));
+
+    }
+
+    /**
+     * Verifies that {@code Lic12} returns {@code false} when {@code numpoints}
+     * is less than 3, as specified by the requirements.
+     * <p>
+     * Test setup: Only 2 points are provided, making it impossible to form the
+     * set required.
+     * </p>
+     */
+    @Test
+    void lic12_numpointsLessThanThree() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(5,5)};
+        int numpoints = 2;
+        int kPts = 1;
+        double length1 = 1.0;
+        double length2 = 10.0;
+
+        assertFalse(evaluator.Lic12(numpoints, points, kPts, length1, length2));
     }
 
     @Test
