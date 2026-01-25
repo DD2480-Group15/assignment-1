@@ -47,17 +47,16 @@ public class LicEvaluator {
      * consecutive data points that are the vertices of
      * a triangle with area greater than AREA1. (AREA1 >= 0).
      * 
+     * @param numPoints number of coordinates in coords
      * @param coords an array of Point elements
      * @param area1 the value of the area that the coordinates area need to be greater than
      * @return true if the condition is met, false otherwise
      */
-    public boolean Lic3(Point[] coords, double area1) {
+    public boolean Lic3(double numPoints, Point[] coords, double area1) {
         // area1 must be equal or greater than 0
         if(area1 < 0){
             return false;
         }
-
-        int numPoints = coords.length;
 
         // need at least 3 coordinates
         if(numPoints >= 3){
@@ -177,8 +176,8 @@ public class LicEvaluator {
         results[0] = Lic0(numpoints, pt, params.length1());
         results[1] = Lic1();
         results[2] = Lic2();
-        //results[3] = Lic3();     // temp commented out so tests will run
-        results[4] = Lic4();            
+        results[3] = Lic3(numpoints, pt, params.area1());
+        results[4] = Lic4();
         results[5] = Lic5(numpoints, pt);
         results[6] = Lic6();
         results[7] = Lic7();

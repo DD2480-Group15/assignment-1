@@ -85,7 +85,7 @@ class LicEvaluatorTest {
         
         double area1 = 1.0;
 
-        assertTrue(evaluator.Lic3(points, area1));
+        assertTrue(evaluator.Lic3(points.length, points, area1));
     }
 
     /**
@@ -104,7 +104,7 @@ class LicEvaluatorTest {
 
         double area1 = 2.0;
 
-        assertFalse(evaluator.Lic3(points, area1));
+        assertFalse(evaluator.Lic3(points.length, points, area1));
 
     }
 
@@ -125,7 +125,7 @@ class LicEvaluatorTest {
         double area1 = 0.0;
 
         // 0 > 0 is false
-        assertFalse(evaluator.Lic3(points, area1));
+        assertFalse(evaluator.Lic3(points.length, points, area1));
     }
 
     @Test
