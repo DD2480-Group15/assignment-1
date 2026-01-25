@@ -65,8 +65,51 @@ class LicEvaluatorTest {
     void lic1() {
     }
 
+    /**
+     * Verifies that LIC2 evaluates to true for an angle that is smaller than pi - epsilon.
+     */
     @Test
-    void lic2() {
+    void lic2_rightAngleEpsilonPiOverSix_returnsTrue() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(1, 1)
+        };
+        Parameters params = Parameters.builder().epsilon(Math.PI / 6).build();
+        assertTrue(evaluator.Lic2(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC2 evaluates to false for an angle that is larger
+     * than pi - epsilon and smaller than pi + epsilon.
+     */
+    @Test
+    void lic2_straightAngleEpsilonPiOverTwo_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(1, 1),
+                new Point(2, 2)
+        };
+        Parameters params = Parameters.builder().epsilon(Math.PI / 2).build();
+        assertFalse(evaluator.Lic2(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC2 evaluates to false for an epsilon that is larger than or equal to pi.
+     */
+    @Test
+    void lic2_invalidEpsilon_returnFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(1, 1)
+        };
+        Parameters params = Parameters.builder().epsilon(Math.PI).build();
+
+        assertFalse(evaluator.Lic2(points.length, points, params));
     }
 
     /**
@@ -135,7 +178,7 @@ class LicEvaluatorTest {
     /**
      * Test case where there are two consecutive points with decreasing x-coordinates.
      * Expecting the function to return true
-    */
+     */
     @Test
     void lic5_returnsTrue() {
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(2, 5)};
@@ -146,7 +189,7 @@ class LicEvaluatorTest {
     /**
      * Test case where there are no two consecutive points with decreasing x-coordinates
      * Expecting the function to return false
-    */
+     */
     @Test
     void lic5_returnsFalse() {
         Point[] points = {new Point(1, 2), new Point(2, 4), new Point(2, 6)};
@@ -157,7 +200,7 @@ class LicEvaluatorTest {
     /**
      * Test case with only one point.
      * Expecting the function to return false
-    */
+     */
     @Test
     void lic5_onePoint_returnsFalse() {
         Point[] points = {new Point(5, 2)};
