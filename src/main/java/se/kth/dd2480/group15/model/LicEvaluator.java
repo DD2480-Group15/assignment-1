@@ -34,8 +34,16 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic1() {
-        // TODO Implement functionality
+    public boolean Lic1(int numPoints, Point[] pt, Parameters params) {
+        if (params.radius1() < 0) { return false; }
+
+        for (int i = 0; i < numPoints - 2; i++) {
+            Point p1 = pt[i], p2 = pt[i+1], p3 = pt[i+2];
+
+            double radius = Utils.getCircleRadius(p1, p2, p3);
+
+            if (radius > params.radius1()) { return true; }
+        }
         return false;
     }
 
@@ -168,7 +176,7 @@ public class LicEvaluator {
     public boolean[] evaluateLics(int numpoints, Point[] pt, Parameters params) {
         boolean results[] = new boolean[15];
         results[0] = Lic0(numpoints, pt, params.length1());
-        results[1] = Lic1();
+        results[1] = Lic1(numpoints, pt, params);
         results[2] = Lic2(numpoints, pt, params);
         results[3] = Lic3();
         results[4] = Lic4();            

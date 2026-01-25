@@ -61,8 +61,74 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic0(numpoints, points, length1));
     }
 
+    /**
+     * Verifies that a negative radius returns false.
+     */
     @Test
-    void lic1() {
+    void lic1_invalidInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,1)
+        };
+
+        Parameters params = Parameters.builder().radius1(-5).build();
+        assertFalse(evaluator.Lic1(points.length, points, params));
+    }
+
+    /**
+     * Verifies that an instance with less than three points returns false.
+     */
+    @Test
+    void lic1_tooFewPoints() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2)
+        };
+
+        Parameters params = Parameters.builder().radius1(5).build();
+        assertFalse(evaluator.Lic1(points.length, points, params));
+    }
+
+    /**
+     * Verifies that an instance with three consectuive points that are further apart than the
+     * given radius returns true.
+     */
+    @Test
+    void lic1_returnsTrue() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(2,8),
+            new Point(16,20)
+        };
+
+        Parameters params = Parameters.builder().radius1(5).build();
+        assertTrue(evaluator.Lic1(points.length, points, params));
+    }
+
+    /**
+     * Verifies that an instance without three consectuive points that are further apart than the
+     * given radius returns false.
+     */
+    @Test
+    void lic1_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(2,8),
+            new Point(16,20)
+        };
+
+        Parameters params = Parameters.builder().radius1(100).build();
+        assertFalse(evaluator.Lic1(points.length, points, params));
     }
 
     /**
