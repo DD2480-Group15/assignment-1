@@ -35,7 +35,7 @@ public class LicEvaluator {
     }
 
     public boolean Lic1(int numPoints, Point[] pt, Parameters params) {
-        if (params.radius1() < 0) { return false; }
+        if (params.radius1() < 0 || numPoints < 3) { return false; }
 
         for (int i = 0; i < numPoints - 2; i++) {
             Point p1 = pt[i], p2 = pt[i+1], p3 = pt[i+2];
