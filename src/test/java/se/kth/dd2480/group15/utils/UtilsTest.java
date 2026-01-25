@@ -71,4 +71,49 @@ class UtilsTest {
         assertThrows(IllegalArgumentException.class,
                 () -> Utils.angleAtVertex(p1, vertex, p3));
     }
+
+
+    /**
+     * Verifies that collinear points return -1.
+     */
+    @Test
+    void getCircleRadius_collinearPoints() {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(1, 0);
+        Point p3 = new Point(2, 0);
+
+        double radius = Utils.getCircleRadius(p1, p2, p3);
+
+        assertEquals(-1, radius, TEST_PRECISION);
+    }
+
+    /**
+     * Verifies that the correct radius is calculated for a simple example
+     */
+    @Test 
+    void getCircleRadius_simpleExample() {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(4, 0);
+        Point p3 = new Point(0, 3);
+
+        double radius = Utils.getCircleRadius(p1, p2, p3);
+        double expected = 2.5;
+
+        assertEquals(expected, radius, TEST_PRECISION);
+    }
+
+    /**
+     * Verifies that the correct radius is calculated for a set of points with non-vertical and non-horizontal lines
+     */
+    @Test
+    void getCircleRadius_nonVerticalnonHorizontal() {
+        Point p1 = new Point(1,2);
+        Point p2 = new Point(4,5);
+        Point p3 = new Point(6,3);
+
+        double radius = Utils.getCircleRadius(p1, p2, p3);
+        double expected = Math.sqrt((1-3.5)*(1-3.5) + (2-2.5)*(2-2.5));
+
+        assertEquals(expected, radius, TEST_PRECISION);
+    }
 }

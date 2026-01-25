@@ -55,4 +55,42 @@ public class Utils {
         if (a < b) return CompType.LT;
         return CompType.GT;
     }
+
+    /**
+     * Computes the radius of the circle passing through all three given points.
+     * 
+     * @param p1 The first point.
+     * @param p2 The second point.
+     * @param p3 The third point.
+     * @return the radius of the circle constructed by the three points or -1 if 
+     * no such circle can be constructed.
+     */
+    public static double getCircleRadius(Point p1, Point p2, Point p3) {
+        // Get all coordinates
+        double x1 = p1.x(), y1 = p1.y();
+        double x2 = p2.x(), y2 = p2.y();
+        double x3 = p3.x(), y3 = p3.y();
+
+        // Get all square lengths
+        double s1 = x1*x1 + y1*y1;
+        double s2 = x2*x2 + y2*y2;
+        double s3 = x3*x3 + y3*y3;
+
+        // Right-hand side of Cramer's rule
+        double bc = (s1 - s2) / 2.0;
+        double cd = (s2 - s3) / 2.0;
+
+        // Check collinearity
+        double det = (x1-x2) * (y2-y3) - (x2-x3) * (y1-y2);
+        if (Math.abs(det) < PRECISION) { return -1; } // No circle can be found
+
+        // Find the center coordinates of the circle (Cramer's rule)
+        double centerx = (bc * (y2-y3) - cd * (y1-y2)) / det;
+        double centery = (cd * (x1-x2) - bc * (x2-x3)) / det;
+
+        // Find the radius of the circle
+        double radius = Math.sqrt( (x2-centerx)*(x2-centerx) + (y2-centery)*(y2-centery) );
+
+        return radius;
+    }
 }
