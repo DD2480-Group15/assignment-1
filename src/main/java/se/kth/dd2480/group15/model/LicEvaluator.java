@@ -3,6 +3,8 @@ package se.kth.dd2480.group15.model;
 import se.kth.dd2480.group15.utils.CompType;
 import se.kth.dd2480.group15.utils.Utils;
 
+import java.util.Arrays;
+
 import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
 
 public class LicEvaluator {
@@ -81,8 +83,40 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic4() {
-        // TODO Implement functionality
+    /**
+     * Checks whether there exists at least one set of {@code qPts} consecutive data
+     * points which lie in more than {@code quads} quadrants.
+     *
+     * @param numPoints the number of data points (must be at least 2 and not more than qPts)
+     * @param points An array containing the (x,y) coordinates for each point.
+     * @param params a Parameters object containing the {@code qPts} and {@code quads} values for the evaluation.
+     * @return true if there is at least one set of {@code qPts} consecutive
+     * points whose points lie in more than {@code quads} quadrants.
+     */
+    public boolean Lic4(int numPoints, Point[] points, Parameters params) {
+        int qPts = params.qPts();
+        int quads = params.quads();
+
+        if (qPts < 2 || qPts > numPoints || quads < 1 || quads > 3) return false;
+
+        boolean[] coveredQuads = new boolean[4];
+        for (int start = 0; start < numPoints - qPts + 1; start++) {
+            Arrays.fill(coveredQuads, false); // "Reset" quadrants
+
+            for (int j = start; j < start + qPts; j++) {
+                double x = points[j].x(), y = points[j].y();
+
+                if (x >= 0 && y >= 0) coveredQuads[0] = true;
+                else if (x < 0 && y >= 0) coveredQuads[1] = true;
+                else if (x <= 0 && y < 0) coveredQuads[2] = true;
+                else coveredQuads[3] = true;
+            }
+
+            int numCoveredQuads = 0;
+            for (boolean quad : coveredQuads) if (quad) numCoveredQuads++;
+            if (numCoveredQuads > quads) return true;
+        }
+
         return false;
     }
 
@@ -179,7 +213,7 @@ public class LicEvaluator {
         results[1] = Lic1(numpoints, pt, params);
         results[2] = Lic2(numpoints, pt, params);
         results[3] = Lic3();
-        results[4] = Lic4();            
+        results[4] = Lic4(numpoints, pt, params);
         results[5] = Lic5(numpoints, pt);
         results[6] = Lic6();
         results[7] = Lic7();

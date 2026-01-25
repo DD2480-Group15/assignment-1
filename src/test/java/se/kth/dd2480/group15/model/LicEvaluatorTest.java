@@ -182,8 +182,59 @@ class LicEvaluatorTest {
     void lic3() {
     }
 
+    /**
+     * Verifies that LIC4 evaluates to true when there is at least one set of {@code qPts} points
+     * that lie in more than {@code quads} quadrants.
+     * <p>
+     * Test setup: one point in each quadrant, {@code qPts} = 4, {@code quads} = 2
+     */
     @Test
-    void lic4() {
+    void lic4_pointsInEveryQuad_returnsTrue() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(1, 1),
+                new Point(-1, 1),
+                new Point(-1, -1),
+                new Point(1, -1)
+        };
+        Parameters params = Parameters.builder().qPts(4).quads(2).build();
+        assertTrue(evaluator.Lic4(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC4 correctly identifies which quadrant a point belongs
+     * to, even when there is ambiguity in which quadrant this is.
+     * <p>
+     * Test setup: three points on the x-axis (two in quadrant 1, one in quadrant 2),
+     * {@code qPts} = 3, {@code quads} = 2
+     */
+    @Test
+    void lic4_pointsOnAxes_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(1, 0),
+                new Point(-1, 0),
+        };
+        Parameters params = Parameters.builder().qPts(3).quads(2).build();
+        assertFalse(evaluator.Lic4(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC4 correctly checks the bounds for the value of {@code qPts}
+     * when it is larger than the number of points.
+     * <p>
+     * Test setup: two points, {@code qPts} = 3, {@code quads} = 1
+     */
+    @Test
+    void lic4_qPtsGreaterThanNumPoints_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(1, 1),
+                new Point(-1, 1)
+        };
+        Parameters params = Parameters.builder().qPts(3).quads(2).build();
+        assertFalse(evaluator.Lic4(points.length, points, params));
     }
 
     /**
@@ -246,27 +297,27 @@ class LicEvaluatorTest {
         // Test case where there are two points separated by G_PTS with decreasing x-coordinates
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(5, 6), new Point(2, 5), new Point(2, 7)};
         LicEvaluator evaluator = new LicEvaluator();
-        assertTrue(evaluator.Lic11(5, points, 2));     
+        assertTrue(evaluator.Lic11(5, points, 2));
     }
 
-    @Test 
-    void lic11_returnsFalse(){
+    @Test
+    void lic11_returnsFalse() {
         // Test case where there are no two points separated by G_PTS with decreasing x-coordinates
-        Point[] points = {new Point(1, 2), new Point(2, 4), new Point(1, 5), new Point(4, 6), new Point(5, 7)}; 
-        LicEvaluator evaluator = new LicEvaluator();    
+        Point[] points = {new Point(1, 2), new Point(2, 4), new Point(1, 5), new Point(4, 6), new Point(5, 7)};
+        LicEvaluator evaluator = new LicEvaluator();
         assertFalse(evaluator.Lic11(5, points, 2));
     }
 
-    @Test 
-    void lic11_GptsOutofRange_returnsFalse(){
+    @Test
+    void lic11_GptsOutofRange_returnsFalse() {
         // not meet 1 ≤G_PTS ≤NUMPOINTS−2
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(5, 6)};
         LicEvaluator evaluator = new LicEvaluator();
         assertFalse(evaluator.Lic11(3, points, 2));
     }
 
-    @Test 
-    void lic11_numPointsLessThan_returnsFalse(){
+    @Test
+    void lic11_numPointsLessThan_returnsFalse() {
         // Test case where NUMPOINTS < 3
         Point[] points = {new Point(1, 2), new Point(3, 4)};
         LicEvaluator evaluator = new LicEvaluator();
@@ -286,9 +337,9 @@ class LicEvaluatorTest {
     }
 
     /**
-    * Test the functionality of evaluateLics method by providing a set of points and parameters,
-    * and verifying that the returned boolean array has the correct length of 15.
-    */
+     * Test the functionality of evaluateLics method by providing a set of points and parameters,
+     * and verifying that the returned boolean array has the correct length of 15.
+     */
     @Test
     void evaluateLics() {
         LicEvaluator evaluator = new LicEvaluator();
