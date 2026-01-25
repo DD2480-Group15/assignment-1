@@ -69,8 +69,55 @@ class LicEvaluatorTest {
     void lic2() {
     }
 
+    /**
+     * Verifies that LIC3 evaluates to true when 3 consecutive points create an area 
+     * greater than area1. 
+     */
     @Test
-    void lic3() {
+    void lic3_shouldReturnTrueWhenAreaIsGreater() {
+        LicEvaluator evaluator = new LicEvaluator();
+        // Create right angled triangle with base 2 and height 2 -> area = 2*2/2 = 2
+        Point[] points = {
+            new Point(0,0),
+            new Point(2,0),
+            new Point(2,2)
+        };
+        
+        double area1 = 1.0;
+
+        assertTrue(evaluator.Lic3(points, area1));
+    }
+
+    @Test
+    void lic3_shouldReturnFalseWhenAreaIsExactlyEqual() {
+        LicEvaluator evaluator = new LicEvaluator();
+        // Create right angled triangle with base 2 and height 2 -> area = 2*2/2 = 2
+        Point[] points = {
+            new Point(0,0),
+            new Point(2,0),
+            new Point(2,2)
+        };
+
+        double area1 = 2.0;
+
+        assertFalse(evaluator.Lic3(points, area1));
+
+    }
+
+    @Test
+    void lic3_shoudlReturnFalseWhenPointsAreCollinear(){
+        LicEvaluator evaluator = new LicEvaluator();
+        // Three points on a straight line
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,0),
+            new Point(2,0)
+        };
+
+        double area1 = 0.0;
+
+        // 0 > 0 is false
+        assertFalse(evaluator.Lic3(points, area1));
     }
 
     @Test
