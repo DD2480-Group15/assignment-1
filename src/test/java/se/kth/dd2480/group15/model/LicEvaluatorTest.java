@@ -170,8 +170,122 @@ class LicEvaluatorTest {
     void lic9() {
     }
 
+    /**
+     * Positive test case
+     * 3 points separated correctly with minimum Point array size
+     * Expecting the function to return true
+     */
     @Test
-    void lic10() {
+    void lic10_threePointsSeparatedCorrectly_minimumDataPoints_returnsTrue() {
+        Parameters params = Parameters.builder().ePts(1).fPts(1).area1(1.0).build();
+        Point[] points = {
+            new Point(0,0), // p1
+            new Point(0,0),
+            new Point(2,0), // p2
+            new Point(0,0),
+            new Point(0,2), // p3
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertTrue(evaluator.Lic10(points.length, points, params));
+    }
+
+    /**
+     * Positive test case 
+     * 3 points separated correctly
+     * Expecting the function to return true
+     */
+    @Test
+    void lic10_threePointsSeparatedCorrectly_returnsTrue() {
+        Parameters params = Parameters.builder().ePts(1).fPts(2).area1(1.0).build();
+        Point[] points = {
+            new Point(0,0), // p1
+            new Point(0,0),
+            new Point(2,0), // p2
+            new Point(0,0),
+            new Point(0,0),
+            new Point(0,2), // p3
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertTrue(evaluator.Lic10(points.length, points, params));
+    }
+
+    /**
+     * Positive test case 
+     * 3 points separated correctly later in the points array
+     * Expecting the function to return true
+     */
+    @Test
+    void lic10_validTriangleLaterInArray_returnsTrue() {
+        Parameters params = Parameters.builder().ePts(1).fPts(1).area1(1.0).build();
+        Point[] points = {
+            new Point(0,0), // ignore
+            new Point(0,0), // ignore
+            new Point(0,0), // p1
+            new Point(0,0),
+            new Point(2,0), // p2
+            new Point(0,0),
+            new Point(0,2), // p3
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertTrue(evaluator.Lic10(points.length, points, params));
+    }
+
+    /**
+     * Negative test case 
+     * 3 points exists but separated incorrectly
+     * Expecting the function to return false
+     */
+    @Test 
+    void lic10_threePointsSeparatedIncorrectly_returnsFalse() {
+        Parameters params = Parameters.builder().ePts(1).fPts(2).area1(1.0).build();
+        Point[] points = {
+            new Point(0,0), // p1
+            new Point(0,0),
+            new Point(2,0), // p2
+            new Point(0,0),
+            new Point(0,0),
+            new Point(1,0), // p3
+            new Point(0,2), 
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertFalse(evaluator.Lic10(points.length, points, params));
+    }
+
+    /**
+     * Negative test case 
+     * ePts set to zero
+     * Expecting the function to return false
+     */
+    @Test 
+    void lic10_eptsOutOfRange_returnsFalse() {
+        Parameters params = Parameters.builder().ePts(0).fPts(2).area1(1.0).build();
+        Point[] points = {
+            new Point(0,0), // p1
+            new Point(2,0), // p2
+            new Point(0,0),
+            new Point(0,0),
+            new Point(0,0), // p3
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertFalse(evaluator.Lic10(points.length, points, params));
+    }
+
+    /**
+     * Negative test case 
+     * points array is too small
+     * Expecting the function to return false
+     */
+    @Test 
+    void lic10_pointsArraySizeTooSmall_returnsFalse() {
+        Parameters params = Parameters.builder().ePts(1).fPts(1).area1(1.0).build();
+        Point[] points = {
+            new Point(0,0), // p1
+            new Point(2,0), 
+            new Point(0,0), // p2
+            new Point(0,2),
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertFalse(evaluator.Lic10(points.length, points, params));
     }
 
     //LIC11
