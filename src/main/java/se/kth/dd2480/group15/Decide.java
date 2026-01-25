@@ -1,6 +1,7 @@
 package se.kth.dd2480.group15;
 
 import se.kth.dd2480.group15.model.Connectors;
+import se.kth.dd2480.group15.model.Evaluator;
 import se.kth.dd2480.group15.model.LicEvaluator;
 import se.kth.dd2480.group15.model.Parameters;
 import se.kth.dd2480.group15.model.Point;
@@ -37,6 +38,8 @@ public class Decide {
 
          // Preliminary Unlocking Matrix
         boolean[][] PUM = new boolean[15][15];
+        Evaluator evaluator2 = new Evaluator();
+        PUM = evaluator2.evaluatePUM(LCM, CMV);
 
         // Final Unlocking Vector
         boolean[] FUV = new boolean[15];
