@@ -1,5 +1,10 @@
 package se.kth.dd2480.group15.model;
 
+import se.kth.dd2480.group15.utils.CompType;
+import se.kth.dd2480.group15.utils.Utils;
+
+import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
+
 public class LicEvaluator {
 
     public static final double PI = 3.1415926535;
@@ -34,8 +39,32 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic2() {
-        // TODO Implement functionality
+    /**
+     * Evaluates whether there exists at least one set of three consecutive data points which
+     * form an angle that is outside the range defined by pi ± epsilon.
+     *
+     * @param numPoints the number of points in the array (must be at least 3)
+     * @param points an array of Point objects representing the coordinates of points
+     * @param params a Parameters object containing the epsilon value for the evaluation
+     * @return true if at least one set of three consecutive points form an angle outside pi ± epsilon; false otherwise
+     */
+    public boolean Lic2(int numPoints, Point[] points, Parameters params) {
+        double epsilon = params.epsilon();
+        if (epsilon < 0 || epsilon >= PI || numPoints < 3) return false;
+
+        for (int i = 0; i < numPoints - 2; i++) {
+            Point p1 = points[i];
+            Point vertex = points[i + 1];
+            Point p3 = points[i + 2];
+
+            try {
+                double angle = Utils.angleAtVertex(p1, vertex, p3);
+                if (doubleCompare(angle, PI - epsilon) == CompType.LT ||
+                    doubleCompare(angle, PI + epsilon) == CompType.GT) return true;
+            } catch (IllegalArgumentException _) {
+            }
+        }
+
         return false;
     }
 
@@ -140,7 +169,7 @@ public class LicEvaluator {
         boolean results[] = new boolean[15];
         results[0] = Lic0(numpoints, pt, params.length1());
         results[1] = Lic1();
-        results[2] = Lic2();
+        results[2] = Lic2(numpoints, pt, params);
         results[3] = Lic3();
         results[4] = Lic4();            
         results[5] = Lic5(numpoints, pt);
