@@ -66,8 +66,66 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic6() {
-        // TODO Implement functionality
+    /**
+     * Checks if there exists at least one set of N_PTS consecutive data points such that 
+     * at least one point lies a distance greater than DIST from the line joining 
+     * the first and last of these N_PTS points.
+     *
+     * If the first and last points are identical, the distance is calculated as the 
+     * Euclidian distance between the coincident point to all other consecutive points.
+     * Otherwise if not identical, the distance from a point (x0, y0)  to the line 
+     * Ax + By + C = 0 is calculated using the point-to-plane formula:
+     * 
+     * distance = |A*x0 + B*y0 + C| / sqrt(A^2 + B^2)
+     * 
+     * The condition is not met if NUMPOINTS is less than 3.
+     * 
+     * @param numpoints The total number of data points.
+     * @param pt        An array containing the (x,y) coordinates for each point.
+     * @param nPts      The number of consecutive points to evaluate (3 <= nPts <= numpoints).
+     * @param dist      The threshold distance (must be non-negative).
+     * @return {@code true} if any point in a set is further than dist from the line 
+     * (or from the coincident point if the first and last points are identical); 
+     * {@code false} otherwise.
+     */
+    public boolean Lic6(int numpoints, Point[] pt, int nPts, double dist) { 
+        if(nPts > numpoints || nPts < 3){
+            return false;
+        } 
+
+        for (int i = 0; i <= numpoints - nPts; i++) {
+            Point first_pt = pt[i];
+            Point last_pt = pt[i + nPts - 1];  
+
+            for (int j = i+1; j < i + nPts - 1; j++){
+                double pt_dist;
+                Point current_pt = pt[j];
+
+                if (first_pt.x() == last_pt.x() && first_pt.y() == last_pt.y()){
+                            double dist_x = current_pt.x() - first_pt.x();
+                            double dist_y = current_pt.y() - first_pt.y();
+
+                            pt_dist = Math.sqrt(Math.pow(dist_x, 2) + Math.pow(dist_y, 2));
+                        }
+
+                else{
+                    double dy = last_pt.y() - first_pt.y();
+                    double dx = last_pt.x() - first_pt.x();
+                    double constant = (last_pt.x() * first_pt.y()) - (last_pt.y() * first_pt.x());
+                    
+                    double num = Math.abs(dy * current_pt.x() + dx * current_pt.y() + constant);
+                    double denom = Math.sqrt(Math.pow(dy,2) + Math.pow(dx, 2));
+
+                    pt_dist = num / denom;
+                }
+
+                if(pt_dist > dist){
+                    return true;
+                }         
+
+            }
+
+        }
         return false;
     }
 
