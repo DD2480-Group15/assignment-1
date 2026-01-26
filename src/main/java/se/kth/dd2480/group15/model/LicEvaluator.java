@@ -294,8 +294,44 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic10() {
-        // TODO Implement functionality
+    /**
+     * Checks if there exists at least 1 set of 3 data points: separated by exactly e_pts and f_pts
+     * consecutive intervening points, respectively, that can create a triangle area greater than area1. 
+     * (Condition is not met when numpoints < 5).
+     * @param numpoints the number of points in the array (must be at least 5)
+     * @param points an array of Point objects representing the coordinates of points 
+     * @param params a Parameters object containing the e_pts, f_pts and area1 value for the evaluation
+     * @return true if at least one triangle, where the condition is met, is found. False otherwise.
+     */
+    public boolean Lic10(int numpoints, Point[] pt, Parameters params) {
+        int e_pts = params.ePts();
+        int f_pts = params.fPts();
+        double area1 = params.area1();
+
+        // verify input
+        if (!(e_pts >= 1 && f_pts >= 1 && (e_pts + f_pts) <= (numpoints - 3) && numpoints >= 5))
+            return false;
+
+        /**
+         * We want e_pts between p1 och p2 
+         * And at the same time f_pts between p2 and p3 
+         */
+        for(int i = 0; i < numpoints - (e_pts + f_pts + 2); i++){
+            Point p1 = pt[i];
+            Point p2 = pt[i + e_pts + 1];
+            Point p3 = pt[i + e_pts + f_pts + 2];
+
+            // get positive area of a triangle from 3 coordinates
+            double area = (0.5)*Math.abs(
+                (p1.x() * (p2.y()- p3.y())) + 
+                (p2.x() * (p3.y()- p1.y())) + 
+                (p3.x() * (p1.y()- p2.y())));
+
+            // if area > area1 
+            if (Utils.doubleCompare(area, area1) == CompType.GT) 
+                return true;
+            }
+
         return false;
     }
 
@@ -356,7 +392,7 @@ public class LicEvaluator {
         results[7] = Lic7();
         results[8] = Lic8(numpoints, pt, params);
         results[9] = Lic9();
-        results[10] = Lic10();
+        results[10] = Lic10(numpoints, pt, params);
         results[11] = Lic11(numpoints, pt, params.gPts());
         results[12] = Lic12();
         results[13] = Lic13();
