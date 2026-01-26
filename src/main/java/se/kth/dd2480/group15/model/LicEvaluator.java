@@ -87,6 +87,11 @@ public class LicEvaluator {
         if (numpoints < 3){
             return false;
         }
+
+        if (kPts < 1 || kPts > numpoints-2){
+            return false;
+        }
+
         for (int i = 0; i < numpoints - kPts - 1; i++){
             Point p1 = pt[i];
             Point p2 = pt[i + kPts + 1];
