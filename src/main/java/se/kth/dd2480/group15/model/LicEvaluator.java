@@ -118,8 +118,33 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic9() {
-        // TODO Implement functionality
+    /**
+     * Evaluates whether there exists at least one set of three points separated by exactly
+     * {@code cPts} and {@code dPts} consecutive intervening points, which form an angle that
+     * is outside the range defined by pi ± {@code epsilon}.
+     *
+     * @param numPoints the number of points in the array
+     * @param points an array containing the (x,y) coordinates for each point.
+     * @param params a Parameters object containing the parameter values used for the
+     *               evaluation ({@code cPts}, {@code dPts}, {@code epsilon}).
+     * @return {@code true} if there exists at least one set of points that fulfills the
+     *         requirements described above; {@code false} otherwise.
+     */
+    public boolean Lic9(int numPoints, Point[] points, Parameters params) {
+        int cPts = params.cPts();
+        int dPts = params.dPts();
+
+        if (cPts < 1 || dPts < 1 || cPts + dPts > numPoints - 3 || numPoints < 5) return false;
+
+        for (int i = 0; i < numPoints - cPts - dPts - 2; i++) {
+            Point[] selectedPoints = new Point[]{
+                    points[i],
+                    points[i + cPts + 1],
+                    points[i + cPts + dPts + 2]
+            };
+            if (Lic2(selectedPoints.length, selectedPoints, params)) return true;
+        }
+
         return false;
     }
 
@@ -184,7 +209,7 @@ public class LicEvaluator {
         results[6] = Lic6();
         results[7] = Lic7();
         results[8] = Lic8();
-        results[9] = Lic9();
+        results[9] = Lic9(numpoints, pt, params);
         results[10] = Lic10();
         results[11] = Lic11(numpoints, pt, params.gPts());
         results[12] = Lic12();

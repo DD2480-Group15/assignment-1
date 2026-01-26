@@ -232,8 +232,67 @@ class LicEvaluatorTest {
     void lic8() {
     }
 
+    /**
+     * Verifies that LIC9 returns true if there exists a set of points
+     * that form an angle that is smaller than pi - epsilon.
+     */
     @Test
-    void lic9() {
+    void lic9_rightAngleEpsilonZero_returnsTrue() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(0, 1),
+                new Point(1, 1),
+                new Point(1, 1)
+        };
+        Parameters params = Parameters.builder()
+                .cPts(1)
+                .dPts(1)
+                .epsilon(0.0)
+                .build();
+        assertTrue(evaluator.Lic9(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC9 returns false if the first point coincides with the vertex point (second point).
+     */
+    @Test
+    void lic9_firstPointCoincidesWithVertexPoint_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 1),
+                new Point(0, 1),
+                new Point(0, 1),
+                new Point(1, 1),
+                new Point(1, 1)
+        };
+        Parameters params = Parameters.builder()
+                .cPts(1)
+                .dPts(1)
+                .epsilon(0.0)
+                .build();
+        assertFalse(evaluator.Lic9(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC9 evaluates to false if the {@code cPts} value is less than 1.
+     */
+    @Test
+    void lic9_cPtsLessThanOne_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(1, 1),
+                new Point(1, 1)
+        };
+        Parameters params = Parameters.builder()
+                .cPts(0)
+                .dPts(1)
+                .epsilon(0.0)
+                .build();
+        assertFalse(evaluator.Lic9(points.length, points, params));
     }
 
     @Test
@@ -246,27 +305,27 @@ class LicEvaluatorTest {
         // Test case where there are two points separated by G_PTS with decreasing x-coordinates
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(5, 6), new Point(2, 5), new Point(2, 7)};
         LicEvaluator evaluator = new LicEvaluator();
-        assertTrue(evaluator.Lic11(5, points, 2));     
+        assertTrue(evaluator.Lic11(5, points, 2));
     }
 
-    @Test 
-    void lic11_returnsFalse(){
+    @Test
+    void lic11_returnsFalse() {
         // Test case where there are no two points separated by G_PTS with decreasing x-coordinates
-        Point[] points = {new Point(1, 2), new Point(2, 4), new Point(1, 5), new Point(4, 6), new Point(5, 7)}; 
-        LicEvaluator evaluator = new LicEvaluator();    
+        Point[] points = {new Point(1, 2), new Point(2, 4), new Point(1, 5), new Point(4, 6), new Point(5, 7)};
+        LicEvaluator evaluator = new LicEvaluator();
         assertFalse(evaluator.Lic11(5, points, 2));
     }
 
-    @Test 
-    void lic11_GptsOutofRange_returnsFalse(){
+    @Test
+    void lic11_GptsOutofRange_returnsFalse() {
         // not meet 1 ≤G_PTS ≤NUMPOINTS−2
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(5, 6)};
         LicEvaluator evaluator = new LicEvaluator();
         assertFalse(evaluator.Lic11(3, points, 2));
     }
 
-    @Test 
-    void lic11_numPointsLessThan_returnsFalse(){
+    @Test
+    void lic11_numPointsLessThan_returnsFalse() {
         // Test case where NUMPOINTS < 3
         Point[] points = {new Point(1, 2), new Point(3, 4)};
         LicEvaluator evaluator = new LicEvaluator();
@@ -286,19 +345,19 @@ class LicEvaluatorTest {
     }
 
     /**
-    * Test the functionality of evaluateLics method by providing a set of points and parameters,
-    * and verifying that the returned boolean array has the correct length of 15.
-    */
+     * Test the functionality of evaluateLics method by providing a set of points and parameters,
+     * and verifying that the returned boolean array has the correct length of 15.
+     */
     @Test
     void evaluateLics() {
         LicEvaluator evaluator = new LicEvaluator();
-        Point[] points = {new Point(1,1), new Point(4,5)};
+        Point[] points = {new Point(1, 1), new Point(4, 5)};
         int numpoints = 2;
         Parameters params = Parameters.builder()
                 .length1(3) // Set parameter values
                 .radius1(1)
                 .cPts(2)
-                .build();  
+                .build();
         boolean[] results = evaluator.evaluateLics(numpoints, points, params);
         assertTrue(results.length == 15);
     }
