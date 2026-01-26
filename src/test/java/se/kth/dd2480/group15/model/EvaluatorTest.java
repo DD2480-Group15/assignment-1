@@ -2,6 +2,8 @@ package se.kth.dd2480.group15.model;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static se.kth.dd2480.group15.utils.Utils.allTrue;
+
 import org.junit.jupiter.api.Test;
 
 class EvaluatorTest {
@@ -229,4 +231,85 @@ class EvaluatorTest {
         assertTrue(PUM[0][2]);
     }
 
+    /**
+     * Verifies that {@code evaluateFUV} returns {@code true} when the
+     * Preliminary Unlocking Vector (PUV) has the corresponding LIC set to {@code false},
+     * regardless of the Preliminary Unlocking Matrix (PUM) values.
+     * <p>
+     * Test setup: PUM array is set to all {@code false}. PUV array is set such that
+     * all LICs are {@code false}.
+     * Expected outcome: FUV[0] should be {@code true} since PUV[0] is {@code false}.
+     * </p>
+     */
+    @Test
+    void evaluateFUV_PUVfalse_ReturnsTrue() {
+        Evaluator evaluator = new Evaluator();
+        boolean[][] PUM = new boolean[15][15];
+        boolean[] PUV = new boolean[15];
+        for(int i=0; i<15; i++){
+            PUV[i] = false;
+            for(int j=0; j<15; j++){
+                PUM[i][j] = false;
+            }
+        }
+        boolean[] FUV = evaluator.evaluateFUV(PUM, PUV);
+        assertTrue(FUV[0]);
+    }
+
+    /**
+     * Verifies that {@code evaluateFUV} returns {@code true} when the
+     * Preliminary Unlocking Vector (PUV) has the corresponding LIC set to {@code true},
+     * and all values in the corresponding row of the Preliminary Unlocking Matrix (PUM) are {@code true}.
+     * <p>
+     * Test setup: PUM array is set to all {@code true}. PUV array is set such that
+     * the first row is {@code true} and the rest are {@code false}.
+     * Expected outcome: FUV[0] should be {@code true} since PUV[0] is {@code true} and all PUM[0][j] are {@code true}.
+     * </p>
+     */
+    @Test
+    void evaluateFUV_PUVtrueAllPUMTrue_ReturnsTrue() {
+        Evaluator evaluator = new Evaluator();
+        boolean[][] PUM = new boolean[15][15];
+        boolean[] PUV = new boolean[15];
+        for(int i=0; i<15; i++)
+            PUM[0][i] = true;    
+
+        PUV[0] = true;  
+        for(int i=1; i<15; i++){
+            PUV[i] = true;
+            for(int j=0; j<15; j++){
+                PUM[i][j] = false;
+            }
+        }
+        boolean[] FUV = evaluator.evaluateFUV(PUM, PUV);
+        assertTrue(FUV[0]);
+    }
+
+    /**
+     * Verifies that {@code evaluateFUV} returns {@code false} when the
+     * Preliminary Unlocking Vector (PUV) has the corresponding LIC set to {@code true},
+     * and one of the values in the corresponding row of the Preliminary Unlocking Matrix (PUM) are {@code false}.
+     * <p>
+     * Test setup: PUM array is set to all {@code true}. PUV array is set such that
+     * the first row is {@code true} and the rest are {@code false}.
+     * Expected outcome: FUV[1] should be {@code false} since PUV[1] is {@code true} and all PUM[1][j] are {@code false}.
+     * </p>
+     */
+    @Test
+    void evaluateFUV_PUVtrueAllPUMFalse_ReturnsFalse() {
+        Evaluator evaluator = new Evaluator();
+        boolean[][] PUM = new boolean[15][15];
+        boolean[] PUV = new boolean[15];
+        for(int i=0; i<15; i++)
+            PUM[0][i] = true;    
+        
+        PUV[0] = true;  
+        for(int i=1; i<15; i++){
+            PUV[i] = true;
+            for(int j=0; j<15; j++)
+                PUM[i][j] = false;
+        }
+        boolean[] FUV = evaluator.evaluateFUV(PUM, PUV);
+        assertFalse(FUV[1]);
+    }
 }
