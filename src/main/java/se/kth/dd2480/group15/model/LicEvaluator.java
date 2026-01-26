@@ -123,14 +123,6 @@ public class LicEvaluator {
 
             double radius = Utils.getCircleRadius(p1, p2, p3);
 
-            if (radius == -1) {
-                // If the points are collinear, set the radius to the greatest distance between the points divided by 2
-                double d12 = Math.sqrt(Math.pow(p1.x()-p2.x(), 2) + Math.pow(p1.y()-p2.y(), 2));
-                double d13 = Math.sqrt(Math.pow(p1.x()-p3.x(), 2) + Math.pow(p1.y()-p3.y(), 2));
-                double d23 = Math.sqrt(Math.pow(p2.x()-p3.x(), 2) + Math.pow(p2.y()-p3.y(), 2));
-                radius = Math.max(d12, Math.max(d13, d23)) / 2;
-            }
-
             if (radius > radius1) { return true; }
         }
 
