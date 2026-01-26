@@ -3,6 +3,8 @@ package se.kth.dd2480.group15.model;
 import se.kth.dd2480.group15.utils.CompType;
 import se.kth.dd2480.group15.utils.Utils;
 
+import java.util.Arrays;
+
 import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
 
 public class LicEvaluator {
@@ -113,8 +115,40 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic4() {
-        // TODO Implement functionality
+    /**
+     * Checks whether there exists at least one set of {@code qPts} consecutive data
+     * points which lie in more than {@code quads} quadrants.
+     *
+     * @param numPoints the number of data points in the array
+     * @param points an array containing the (x,y) coordinates for each point.
+     * @param params a Parameters object containing the {@code qPts} and {@code quads} values for the evaluation.
+     * @return {@code true} if there exists at least one set of points that fulfills the
+     *         requirements described above; {@code false} otherwise.
+     */
+    public boolean Lic4(int numPoints, Point[] points, Parameters params) {
+        int qPts = params.qPts();
+        int quads = params.quads();
+
+        if (qPts < 2 || qPts > numPoints || quads < 1 || quads > 3) return false;
+
+        boolean[] coveredQuads = new boolean[4];
+        for (int start = 0; start < numPoints - qPts + 1; start++) {
+            Arrays.fill(coveredQuads, false); // "Reset" quadrants
+
+            for (int j = start; j < start + qPts; j++) {
+                double x = points[j].x(), y = points[j].y();
+
+                if (x >= 0 && y >= 0) coveredQuads[0] = true;
+                else if (x < 0 && y >= 0) coveredQuads[1] = true;
+                else if (x <= 0 && y < 0) coveredQuads[2] = true;
+                else coveredQuads[3] = true;
+            }
+
+            int numCoveredQuads = 0;
+            for (boolean quad : coveredQuads) if (quad) numCoveredQuads++;
+            if (numCoveredQuads > quads) return true;
+        }
+
         return false;
     }
 
