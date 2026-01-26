@@ -325,9 +325,63 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic5(1, points));
     }
 
-
+    /**
+     * Verifies that {@code Lic6} returns {@code true} when at least one point in a set 
+     * of {@code nPts} lies further than {@code dist} from the line connecting 
+     * the first and last points.
+     * <p>
+     * Test setup: Points (0,0) and (4,0) form a horizontal line. The intermediate 
+     * point (2,3) is 3.0 units away perpendicularly, which is greater than dist (2.0).
+     * </p>
+     */
     @Test
-    void lic6() {
+    void lic6_validInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(2,3), new Point(4,0)};
+        int numpoints = 3;
+        int nPts = 3;
+        double dist = 2.0;
+
+        assertTrue(evaluator.Lic6(numpoints, points, nPts, dist));
+    }
+
+    /**
+     * Verifies that {@code Lic6} returns {@code false} when all intermediate points 
+     * lie within the {@code dist} threshold from the line joining the endpoints.
+     * <p>
+     * Test setup: Intermediate point (2,1) is only 1.0 unit away from the line 
+     * between (0,0) and (4,0). Threshold (dist) is set to 2.0.
+     * </p>
+     */
+    void lic6_invalidInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(2,1), new Point(4,0)};
+        int numpoints = 3;
+        int nPts = 3;
+        double dist = 2.0;
+
+        assertFalse(evaluator.Lic6(numpoints, points, nPts, dist));
+    }
+
+    /**
+     * Verifies that {@code Lic6} returns {@code false} when {@code numpoints}
+     * is less than 3, as specified by the requirements.
+     * <p>
+     * Test setup: Only 2 points are provided, making it impossible to form
+     * the set required.
+     * </p>
+     */
+    void lic6_numpoints_lessThanThree() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(5,5)};
+        int numpoints = 2;
+        int nPts = 3;
+        double dist = 2.0;
+
+        assertFalse(evaluator.Lic6(numpoints, points, nPts, dist));
     }
 
     @Test
