@@ -87,11 +87,11 @@ public class LicEvaluator {
      * Checks whether there exists at least one set of {@code qPts} consecutive data
      * points which lie in more than {@code quads} quadrants.
      *
-     * @param numPoints the number of data points (must be at least 2 and not more than qPts)
-     * @param points An array containing the (x,y) coordinates for each point.
+     * @param numPoints the number of data points in the array
+     * @param points an array containing the (x,y) coordinates for each point.
      * @param params a Parameters object containing the {@code qPts} and {@code quads} values for the evaluation.
-     * @return true if there is at least one set of {@code qPts} consecutive
-     * points whose points lie in more than {@code quads} quadrants.
+     * @return {@code true} if there exists at least one set of points that fulfills the
+     *         requirements described above; {@code false} otherwise.
      */
     public boolean Lic4(int numPoints, Point[] points, Parameters params) {
         int qPts = params.qPts();
