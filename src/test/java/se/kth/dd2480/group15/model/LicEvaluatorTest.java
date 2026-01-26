@@ -444,8 +444,85 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic7(numpoints, points, kPts, length1));
     }
 
+    /**
+     * Verifies that LIC8 returns false when a negative value for bPts is given.
+     */
     @Test
-    void lic8() {
+    void lic8_invalidInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(1, 0),
+            new Point(3,1),
+            new Point(5,9),
+            new Point(4,1)
+        };
+
+        Parameters params = Parameters.builder().radius1(5).aPts(2).bPts(-1).build();
+        assertFalse(evaluator.Lic8(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC8 returns false when less then aPts+bPts+3 points are given.
+     */
+    @Test
+    void lic8_tooFewPoints() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(3,1),
+            new Point(5,9)
+        };
+
+        Parameters params = Parameters.builder().radius1(100).aPts(4).bPts(4).build();
+        assertFalse(evaluator.Lic8(points.length, points, params));
+    }
+
+    /**
+     * Verifies that an instance that does not satisfy the conditions of LIC8 returns false.
+     */
+    @Test
+    void lic8_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(3,1),
+            new Point(5,9),
+            new Point(5,6),
+            new Point(7,2),
+            new Point(6,3),
+            new Point(2,5),
+            new Point(9,0)
+        };
+
+        Parameters params = Parameters.builder().radius1(6).aPts(2).bPts(2).build();
+        assertFalse(evaluator.Lic8(points.length, points, params));
+    }
+
+    /**
+     * Verifies that an instance that satisfies the conditions of LIC8 returns true.
+     */
+    @Test
+    void lic8_returnsTrue() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(1, 0),
+            new Point(3,1),
+            new Point(5,9),
+            new Point(1,4)
+        };
+
+        Parameters params = Parameters.builder().radius1(1.5).aPts(2).bPts(1).build();
+        assertTrue(evaluator.Lic8(points.length, points, params));
     }
 
     @Test
