@@ -245,7 +245,7 @@ public class LicEvaluator {
         results[1] = Lic1(numpoints, pt, params);
         results[2] = Lic2(numpoints, pt, params);
         results[3] = Lic3(numpoints, pt, params.area1());
-        results[4] = Lic4();            
+        results[4] = Lic4(numpoints, pt, params);
         results[5] = Lic5(numpoints, pt);
         results[6] = Lic6();
         results[7] = Lic7();
