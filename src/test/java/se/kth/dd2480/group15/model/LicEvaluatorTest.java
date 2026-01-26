@@ -277,8 +277,88 @@ class LicEvaluatorTest {
     void lic12() {
     }
 
+    /**
+     * Verifies that a negative radius2 returns false.
+     */
     @Test
-    void lic13() {
+    void lic13_invalidInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(2,8),
+            new Point(16,20),
+            new Point(4,8),
+            new Point(1,4),
+            new Point(9,0)
+        };
+
+        Parameters params = Parameters.builder().radius1(9).radius2(-80).aPts(2).bPts(2).build();
+        assertFalse(evaluator.Lic13(points.length, points, params));
+    }
+
+    /**
+     * Verifies that an instance with too few points returns false.
+     */
+    @Test
+    void lic13_tooFewPoints() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(2,8),
+            new Point(16,20),
+            new Point(4,8),
+            new Point(1,4),
+            new Point(9,0)
+        };
+
+        Parameters params = Parameters.builder().radius1(9).radius2(8).aPts(8).bPts(2).build();
+        assertFalse(evaluator.Lic13(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC13 returns true when given an instance that fulfills the requirements.
+     */
+    @Test 
+    void lic13_returnsTrue() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(2,4),
+            new Point(16,20),
+            new Point(4,8),
+            new Point(1,4),
+            new Point(3,4)
+        };
+
+        Parameters params = Parameters.builder().radius1(3).radius2(5).aPts(1).bPts(2).build();
+        assertTrue(evaluator.Lic13(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC13 returns false when given an instance that does not fulfill both requirements.
+     */
+    @Test
+    void lic13_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(2,4),
+            new Point(16,20),
+            new Point(4,8),
+            new Point(1,4),
+            new Point(3,4)
+        };
+
+        Parameters params = Parameters.builder().radius1(3).radius2(1).aPts(1).bPts(2).build();
+        assertFalse(evaluator.Lic13(points.length, points, params));
     }
 
     @Test

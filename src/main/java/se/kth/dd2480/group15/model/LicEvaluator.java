@@ -155,8 +155,26 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic13() {
-        // TODO Implement functionality
+    public boolean Lic13(int numPoints, Point[] pt, Parameters params) {
+        int aPts = params.aPts(), bPts = params.bPts();
+        double radius1 = params.radius1();
+        double radius2 = params.radius2();
+        if (numPoints < 5 || aPts < 1 || bPts < 1 || aPts+bPts > numPoints-3 || radius1 < 0 || radius2 < 0) { return false; }
+
+        boolean foundCan = false;
+        boolean foundCannot = false;
+
+        for (int i = 0; i < numPoints-aPts-bPts-2; i++) {
+            Point p1 = pt[i], p2 = pt[i+aPts+1], p3 = pt[i + aPts+1 + bPts+1];
+
+            double radius = Utils.getCircleRadius(p1, p2, p3);
+
+            if (radius > radius1) { foundCannot = true; }
+            if (radius <= radius2) {foundCan = true; }
+        }
+
+        if (foundCan && foundCannot) { return true; }
+
         return false;
     }
 
@@ -188,7 +206,7 @@ public class LicEvaluator {
         results[10] = Lic10();
         results[11] = Lic11(numpoints, pt, params.gPts());
         results[12] = Lic12();
-        results[13] = Lic13();
+        results[13] = Lic13(numpoints, pt, params);
         results[14] = Lic14();
         return results;
     }
