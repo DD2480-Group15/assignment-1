@@ -132,6 +132,10 @@ public class LicEvaluator {
             return false;
         }
 
+        if(length2 < 0){
+            return false;
+        }
+
         boolean foundGreater = false;
         boolean foundLess = false;
 
