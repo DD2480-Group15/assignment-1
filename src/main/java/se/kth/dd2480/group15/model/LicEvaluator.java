@@ -356,9 +356,54 @@ public class LicEvaluator {
                 return true;
         return false;
     }
+    
+    /**
+     * Checks if there exists at least one pair of data points separated by K_PTS 
+     * that are a distance greater than LENGTH1 apart, and at least one pair 
+     * separated by K_PTS that are a distance less than LENGTH2 apart. Both parts
+     * must be true for the LIC to be true.
+     * <p>The condition is not met when NUMPOINTS is less than 3.</p>
+     *
+     * @param numpoints The total number of data points.
+     * @param pt        An array containing the (x,y) coordinates for each point.
+     * @param kPts      The number of intervening points.
+     * @param length1   The threshold distance for the "greater than" condition.
+     * @param length2   The threshold distance for the "less than" condition (0 <= length2).
+     * @return {@code true} if both distance conditions are met; {@code false} otherwise.
+     */
+    public boolean Lic12(int numpoints, Point[] pt, int kPts, double length1, double length2) {
+        if(numpoints < 3){
+            return false;
+        }
 
-    public boolean Lic12() {
-        // TODO Implement functionality
+        if(length2 < 0){
+            return false;
+        }
+
+        boolean foundGreater = false;
+        boolean foundLess = false;
+
+        for(int i = 0; i < numpoints - kPts - 1; i++){
+            Point p1 = pt[i];
+            Point p2 = pt[i + kPts + 1];
+
+            double dist_x = p2.x() - p1.x();
+            double dist_y = p2.y() - p1.y();
+
+            double dist = Math.hypot(dist_x, dist_y);
+
+            if(dist > length1){
+                foundGreater = true;
+            }
+            if(dist < length2){
+                foundLess = true;
+            }
+
+            if(foundGreater && foundLess){
+                return true;
+            }
+        }
+
         return false;
     }
 
