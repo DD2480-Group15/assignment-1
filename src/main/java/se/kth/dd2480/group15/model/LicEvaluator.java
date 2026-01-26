@@ -1,20 +1,25 @@
 package se.kth.dd2480.group15.model;
 
+import se.kth.dd2480.group15.utils.CompType;
+import se.kth.dd2480.group15.utils.Utils;
+
+import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
+
 public class LicEvaluator {
 
     public static final double PI = 3.1415926535;
 
+    /**
+     * Checks if there exists at least one set of two consecutive data points 
+     * that are a distance greater than the specified length.
+     *
+     * @param numpoints The number of data points in the array.
+     * @param pt        An array containing the (x,y) coordinates for each point.
+     * @param length1   The threshold distance (must be non-negative).
+     * @return {@code true} if any two consecutive points are further apart than length1; 
+     * {@code false} otherwise.
+     */
     public boolean Lic0(int numpoints, Point[] pt, double length1) {
-        /**
-         * Checks if there exists at least one set of two consecutive data points 
-         * that are a distance greater than the specified length.
-         *
-         * @param numpoints The number of data points in the array.
-         * @param pt        An array containing the (x,y) coordinates for each point.
-         * @param length1   The threshold distance (must be non-negative).
-         * @return {@code true} if any two consecutive points are further apart than length1; 
-         * {@code false} otherwise.
-         */
 
         for (int i = 0; i < numpoints-1; i++) {
             double dist_x = pt[i+1].x() - pt[i].x();
@@ -29,13 +34,45 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic1() {
-        // TODO Implement functionality
+    public boolean Lic1(int numPoints, Point[] pt, Parameters params) {
+        if (params.radius1() < 0 || numPoints < 3) { return false; }
+
+        for (int i = 0; i < numPoints - 2; i++) {
+            Point p1 = pt[i], p2 = pt[i+1], p3 = pt[i+2];
+
+            double radius = Utils.getCircleRadius(p1, p2, p3);
+
+            if (radius > params.radius1()) { return true; }
+        }
         return false;
     }
 
-    public boolean Lic2() {
-        // TODO Implement functionality
+    /**
+     * Evaluates whether there exists at least one set of three consecutive data points which
+     * form an angle that is outside the range defined by pi ± epsilon.
+     *
+     * @param numPoints the number of points in the array (must be at least 3)
+     * @param points an array of Point objects representing the coordinates of points
+     * @param params a Parameters object containing the epsilon value for the evaluation
+     * @return true if at least one set of three consecutive points form an angle outside pi ± epsilon; false otherwise
+     */
+    public boolean Lic2(int numPoints, Point[] points, Parameters params) {
+        double epsilon = params.epsilon();
+        if (epsilon < 0 || epsilon >= PI || numPoints < 3) return false;
+
+        for (int i = 0; i < numPoints - 2; i++) {
+            Point p1 = points[i];
+            Point vertex = points[i + 1];
+            Point p3 = points[i + 2];
+
+            try {
+                double angle = Utils.angleAtVertex(p1, vertex, p3);
+                if (doubleCompare(angle, PI - epsilon) == CompType.LT ||
+                    doubleCompare(angle, PI + epsilon) == CompType.GT) return true;
+            } catch (IllegalArgumentException _) {
+            }
+        }
+
         return false;
     }
 
@@ -185,9 +222,32 @@ public class LicEvaluator {
         // TODO Implement functionality
         return false;
     }
-
-    public boolean[] evaluateLics() {
-        // TODO Implement functionality
-        return new  boolean[0];
+    
+    /**
+    * Returns an array of boolean values indicating whether each of the 15 LICs is satisfied.
+    *
+    * @param  numpoints the number of data points
+    * @param  pt        an array of Point objects representing the data points
+    * @param  params    a Parameters object containing the necessary parameters for LIC evaluation
+    * @return      an array of boolean values where each index corresponds to a LIC (0-14)
+    */
+    public boolean[] evaluateLics(int numpoints, Point[] pt, Parameters params) {
+        boolean results[] = new boolean[15];
+        results[0] = Lic0(numpoints, pt, params.length1());
+        results[1] = Lic1(numpoints, pt, params);
+        results[2] = Lic2(numpoints, pt, params);
+        results[3] = Lic3();
+        results[4] = Lic4();            
+        results[5] = Lic5(numpoints, pt);
+        results[6] = Lic6();
+        results[7] = Lic7();
+        results[8] = Lic8();
+        results[9] = Lic9();
+        results[10] = Lic10();
+        results[11] = Lic11(numpoints, pt, params.gPts());
+        results[12] = Lic12();
+        results[13] = Lic13();
+        results[14] = Lic14();
+        return results;
     }
 }

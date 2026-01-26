@@ -61,12 +61,121 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic0(numpoints, points, length1));
     }
 
+    /**
+     * Verifies that a negative radius returns false.
+     */
     @Test
-    void lic1() {
+    void lic1_invalidInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,1)
+        };
+
+        Parameters params = Parameters.builder().radius1(-5).build();
+        assertFalse(evaluator.Lic1(points.length, points, params));
     }
 
+    /**
+     * Verifies that an instance with less than three points returns false.
+     */
     @Test
-    void lic2() {
+    void lic1_tooFewPoints() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2)
+        };
+
+        Parameters params = Parameters.builder().radius1(5).build();
+        assertFalse(evaluator.Lic1(points.length, points, params));
+    }
+
+    /**
+     * Verifies that an instance with three consectuive points that are further apart than the
+     * given radius returns true.
+     */
+    @Test
+    void lic1_returnsTrue() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(2,8),
+            new Point(16,20)
+        };
+
+        Parameters params = Parameters.builder().radius1(5).build();
+        assertTrue(evaluator.Lic1(points.length, points, params));
+    }
+
+    /**
+     * Verifies that an instance without three consectuive points that are further apart than the
+     * given radius returns false.
+     */
+    @Test
+    void lic1_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,2),
+            new Point(2,8),
+            new Point(16,20)
+        };
+
+        Parameters params = Parameters.builder().radius1(100).build();
+        assertFalse(evaluator.Lic1(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC2 evaluates to true for an angle that is smaller than pi - epsilon.
+     */
+    @Test
+    void lic2_rightAngleEpsilonPiOverSix_returnsTrue() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(1, 1)
+        };
+        Parameters params = Parameters.builder().epsilon(Math.PI / 6).build();
+        assertTrue(evaluator.Lic2(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC2 evaluates to false for an angle that is larger
+     * than pi - epsilon and smaller than pi + epsilon.
+     */
+    @Test
+    void lic2_straightAngleEpsilonPiOverTwo_returnsFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(1, 1),
+                new Point(2, 2)
+        };
+        Parameters params = Parameters.builder().epsilon(Math.PI / 2).build();
+        assertFalse(evaluator.Lic2(points.length, points, params));
+    }
+
+    /**
+     * Verifies that LIC2 evaluates to false for an epsilon that is larger than or equal to pi.
+     */
+    @Test
+    void lic2_invalidEpsilon_returnFalse() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(1, 1)
+        };
+        Parameters params = Parameters.builder().epsilon(Math.PI).build();
+
+        assertFalse(evaluator.Lic2(points.length, points, params));
     }
 
     @Test
@@ -77,20 +186,37 @@ class LicEvaluatorTest {
     void lic4() {
     }
 
+    /**
+     * Test case where there are two consecutive points with decreasing x-coordinates.
+     * Expecting the function to return true
+     */
     @Test
-    void lic5() {
-        // Test case where there are two consecutive points with decreasing x-coordinates
+    void lic5_returnsTrue() {
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(2, 5)};
         LicEvaluator evaluator = new LicEvaluator();
         assertTrue(evaluator.Lic5(3, points));
+    }
 
-        // Test case where there are no two consecutive points with decreasing x-coordinates
-        Point[] points2 = {new Point(1, 2), new Point(2, 4), new Point(5, 6)};
-        assertFalse(evaluator.Lic5(3, points2));
+    /**
+     * Test case where there are no two consecutive points with decreasing x-coordinates
+     * Expecting the function to return false
+     */
+    @Test
+    void lic5_returnsFalse() {
+        Point[] points = {new Point(1, 2), new Point(2, 4), new Point(2, 6)};
+        LicEvaluator evaluator = new LicEvaluator();
+        assertFalse(evaluator.Lic5(3, points));
+    }
 
-        // Test case with only one point
-        Point[] points3 = {new Point(5, 2)};
-        assertFalse(evaluator.Lic5(1, points3));
+    /**
+     * Test case with only one point.
+     * Expecting the function to return false
+     */
+    @Test
+    void lic5_onePoint_returnsFalse() {
+        Point[] points = {new Point(5, 2)};
+        LicEvaluator evaluator = new LicEvaluator();
+        assertFalse(evaluator.Lic5(1, points));
     }
 
     /**
@@ -213,7 +339,21 @@ class LicEvaluatorTest {
     void lic14() {
     }
 
+    /**
+    * Test the functionality of evaluateLics method by providing a set of points and parameters,
+    * and verifying that the returned boolean array has the correct length of 15.
+    */
     @Test
     void evaluateLics() {
+        LicEvaluator evaluator = new LicEvaluator();
+        Point[] points = {new Point(1,1), new Point(4,5)};
+        int numpoints = 2;
+        Parameters params = Parameters.builder()
+                .length1(3) // Set parameter values
+                .radius1(1)
+                .cPts(2)
+                .build();  
+        boolean[] results = evaluator.evaluateLics(numpoints, points, params);
+        assertTrue(results.length == 15);
     }
 }

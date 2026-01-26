@@ -1,6 +1,8 @@
 package se.kth.dd2480.group15;
 
 import se.kth.dd2480.group15.model.Connectors;
+import se.kth.dd2480.group15.model.Evaluator;
+import se.kth.dd2480.group15.model.LicEvaluator;
 import se.kth.dd2480.group15.model.Parameters;
 import se.kth.dd2480.group15.model.Point;
 
@@ -29,11 +31,15 @@ public class Decide {
         // Logical Connector Matrix
         Connectors[][] LCM = new Connectors[15][15];
 
-        // Preliminary Unlocking Matrix
-        boolean[][] PUM = new boolean[15][15];
-
         // Conditions Met Vector
         boolean[] CMV = new boolean[15];
+        LicEvaluator evaluator = new LicEvaluator();
+        CMV = evaluator.evaluateLics(numPoints, coords, params);
+
+         // Preliminary Unlocking Matrix
+        boolean[][] PUM = new boolean[15][15];
+        Evaluator evaluator2 = new Evaluator();
+        PUM = evaluator2.evaluatePUM(LCM, CMV);
 
         // Final Unlocking Vector
         boolean[] FUV = new boolean[15];
@@ -41,4 +47,5 @@ public class Decide {
         // Decision: Launch or No Launch
         boolean launch = false;
     }
+
 }
