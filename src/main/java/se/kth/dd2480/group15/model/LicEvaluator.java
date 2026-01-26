@@ -77,9 +77,41 @@ public class LicEvaluator {
 
         return false;
     }
+    
+    /**
+     * Checks if there exists at least one set of three 
+     * consecutive data points that are the vertices of
+     * a triangle with area greater than AREA1. (AREA1 >= 0).
+     * 
+     * @param numPoints number of coordinates in coords
+     * @param coords an array of Point elements
+     * @param area1 the value of the area that the coordinates area need to be greater than
+     * @return true if the condition is met, false otherwise
+     */
+    public boolean Lic3(double numPoints, Point[] coords, double area1) {
+        // area1 must be equal or greater than 0
+        if(area1 < 0){
+            return false;
+        }
 
-    public boolean Lic3() {
-        // TODO Implement functionality
+        // need at least 3 coordinates
+        if(numPoints >= 3){
+            for(int i = 0; i <= (numPoints-3); i++){
+                Point p1 = coords[i];
+                Point p2 = coords[i+1];
+                Point p3 = coords[i+2];
+
+                // get positive area of a triangle from 3 coordinates
+                double area = (0.5)*Math.abs(
+                    (p1.x() * (p2.y()- p3.y())) + 
+                    (p2.x() * (p3.y()- p1.y())) + 
+                    (p3.x() * (p1.y()- p2.y())));
+                
+                // if area > area1 
+                if (Utils.doubleCompare(area, area1) == CompType.GT) 
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -212,8 +244,8 @@ public class LicEvaluator {
         results[0] = Lic0(numpoints, pt, params.length1());
         results[1] = Lic1(numpoints, pt, params);
         results[2] = Lic2(numpoints, pt, params);
-        results[3] = Lic3();
-        results[4] = Lic4(numpoints, pt, params);
+        results[3] = Lic3(numpoints, pt, params.area1());
+        results[4] = Lic4();            
         results[5] = Lic5(numpoints, pt);
         results[6] = Lic6();
         results[7] = Lic7();
