@@ -116,4 +116,24 @@ class UtilsTest {
 
         assertEquals(expected, radius, TEST_PRECISION);
     }
+
+    /**
+     * Verifies that allTrue returns true when all elements are true, and false otherwise.
+     */
+    @Test
+    void AllTrue_returnsTrue() {
+        boolean [] boolArray = {true, true, true};
+        boolean result = Utils.allTrue(boolArray);
+        assertTrue(result);
+    }
+
+    /**
+     * Verifies that allTrue returns false when at least one element is false.
+     */
+    @Test
+    void AllTrue_returnsFalse() {
+        boolean [] boolArray = {true, false, true};
+        boolean result = Utils.allTrue(boolArray);
+        assertFalse(result);
+    }
 }

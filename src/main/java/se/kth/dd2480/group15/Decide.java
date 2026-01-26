@@ -31,6 +31,9 @@ public class Decide {
         // Logical Connector Matrix
         Connectors[][] LCM = new Connectors[15][15];
 
+        // Preliminary Unlocking Vector
+        boolean[] PUV = new boolean[15];
+
         // Conditions Met Vector
         boolean[] CMV = new boolean[15];
         LicEvaluator evaluator = new LicEvaluator();
@@ -43,6 +46,7 @@ public class Decide {
 
         // Final Unlocking Vector
         boolean[] FUV = new boolean[15];
+        FUV = evaluator2.evaluateFUV(PUM, PUV);
 
         // Decision: Launch or No Launch
         boolean launch = false;
