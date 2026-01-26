@@ -384,8 +384,64 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic6(numpoints, points, nPts, dist));
     }
 
+    /**
+     * Verifies that {@code Lic7} returns {@code true} when at least one pair of
+     * data points separated by {@code kPts} exceeds the length threshold.
+     * <p>
+     * Test setup: Points (0,0) and (5,0) are separated by 1 intervening point.
+     * The distance (5.0) is strictly greater than {@code length1} 4.0.
+     * </p>
+     */
     @Test
-    void lic7() {
+    void lic7_validInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(1,1), new Point(5,0)};
+        int numpoints = 3;
+        int kPts = 1;
+        double length1 = 4.0;
+
+        assertTrue(evaluator.Lic7(numpoints, points, kPts, length1));
+    }
+
+    /**
+     * Verifies that {@code Lic7} returns {@code false} when the distance between
+     * points separated by {@code kPts} is less than the threshold.
+     * <p>
+     * Test setup: Points (0,0) and (3,0) are 3.0 units apart. The threshold, i.e.
+     * {@code length1} is 4.0, which is greater than 3.0.
+     * </p>
+     */
+    @Test
+    void lic7_invalidInput() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(1,1), new Point(3,0)};
+        int numpoints = 3;
+        int kPts = 1;
+        double length1 = 4.0;
+
+        assertFalse(evaluator.Lic7(numpoints, points, kPts, length1));
+    }
+
+    /**
+     * Verifies that {@code Lic7} returns {@code false} when {@code numpoints}
+     * is less than 3, as specified by the requirements.
+     * <p>
+     * Test setup: Only 2 points are provided, making it impossible to form the
+     * set required.
+     * </p>
+     */
+    @Test
+    void lic7_numpointsLessThanThree() {
+        LicEvaluator evaluator = new LicEvaluator();
+
+        Point[] points = {new Point(0,0), new Point(5,5)};
+        int numpoints = 2;
+        int kPts = 1;
+        double length1 = 1.0;
+
+        assertFalse(evaluator.Lic7(numpoints, points, kPts, length1));
     }
 
     @Test

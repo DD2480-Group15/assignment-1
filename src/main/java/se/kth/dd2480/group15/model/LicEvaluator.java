@@ -236,8 +236,40 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic7() {
-        // TODO Implement functionality
+    /**
+     * Checks if there exists at least one set of two data points separated by 
+     * exactly K_PTS consecutive intervening points that are a distance 
+     * greater than the specified LENGTH1.
+     * <p>The condition is not met when NUMPOINTS is less than 3.</p>
+     *
+     * @param numpoints The total number of data points.
+     * @param pt        An array containing the (x,y) coordinates for each point.
+     * @param kPts      The number of intervening points (1 <= kPts <= numpoints-2).
+     * @param length1   The threshold distance (length1 >= 0).
+     * @return {@code true} if any such pair exists; {@code false} otherwise.
+     */
+    public boolean Lic7(int numpoints, Point[] pt, int kPts, double length1) {
+        if (numpoints < 3){
+            return false;
+        }
+
+        if (kPts < 1 || kPts > numpoints-2){
+            return false;
+        }
+
+        for (int i = 0; i < numpoints - kPts - 1; i++){
+            Point p1 = pt[i];
+            Point p2 = pt[i + kPts + 1];
+
+            double dist_x = p2.x() - p1.x();
+            double dist_y = p2.y() - p1.y();
+
+            double euclidian_dist = Math.sqrt(Math.pow(dist_x, 2) + Math.pow(dist_y, 2));
+
+            if (euclidian_dist > length1){
+                return true;
+            }
+        }   
         return false;
     }
 
