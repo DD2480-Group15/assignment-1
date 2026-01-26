@@ -178,8 +178,63 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic2(points.length, points, params));
     }
 
+    /**
+     * Verifies that LIC3 evaluates to true when 3 consecutive points, create a triangle
+     * with area 2.0, is correctly identified as greater than area1 = 1.0.
+     */
     @Test
-    void lic3() {
+    void lic3_shouldReturnTrueWhenAreaIsGreater() {
+        LicEvaluator evaluator = new LicEvaluator();
+        // Create right angled triangle with base 2 and height 2 -> area = 2*2/2 = 2
+        Point[] points = {
+            new Point(0,0),
+            new Point(2,0),
+            new Point(2,2)
+        };
+        
+        double area1 = 1.0;
+
+        assertTrue(evaluator.Lic3(points.length, points, area1));
+    }
+
+    /**
+     * Verifies that LIC3 evaluates to false when the triangle area (2.0) is exactly 
+     * equal to area1 (2.0), as the requirement is "strictly greater than".
+     */
+    @Test
+    void lic3_shouldReturnFalseWhenAreaIsExactlyEqual() {
+        LicEvaluator evaluator = new LicEvaluator();
+        // Create right angled triangle with base 2 and height 2 -> area = 2*2/2 = 2
+        Point[] points = {
+            new Point(0,0),
+            new Point(2,0),
+            new Point(2,2)
+        };
+
+        double area1 = 2.0;
+
+        assertFalse(evaluator.Lic3(points.length, points, area1));
+
+    }
+
+    /**
+     * Verifies that LIC3 evaluates to false when three consecutive points are on a straight 
+     * line, resulting in an area of 0.0, which can never greater than area1.
+     */
+    @Test
+    void lic3_shoudlReturnFalseWhenPointsAreCollinear(){
+        LicEvaluator evaluator = new LicEvaluator();
+        // Three points on a straight line
+        Point[] points = {
+            new Point(0,0),
+            new Point(1,0),
+            new Point(2,0)
+        };
+
+        double area1 = 0.0;
+
+        // 0 > 0 is false
+        assertFalse(evaluator.Lic3(points.length, points, area1));
     }
 
     @Test
