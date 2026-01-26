@@ -155,6 +155,20 @@ public class LicEvaluator {
         return false;
     }
 
+    /**
+     * Checks whether there extists at least one set of three data points, separated by exactly A_PTS and B_PTS
+     * consecutive intervening points, respectively, that cannot be contained within or on a circle of
+     * radius RADIUS1. In addition, there exists at least one set of three data points (which can be
+     * the same or different from the three data points just mentioned) separated by exactly A_PTS
+     * and B_PTS consecutive intervening points, respectively, that can be contained in or on a
+     * circle of radius RADIUS2. Both parts must be true for the LIC to be true. The condition is
+     * not met when NUMPOINTS < 5.
+     * 
+     * @param numPoints The number of points in the array.
+     * @param pt the array of data points.
+     * @param params a Parameters object containing 
+     * @return true if the conditions of LIC13 are satisfied (see above); false otherwise.
+     */
     public boolean Lic13(int numPoints, Point[] pt, Parameters params) {
         int aPts = params.aPts(), bPts = params.bPts();
         double radius1 = params.radius1();
