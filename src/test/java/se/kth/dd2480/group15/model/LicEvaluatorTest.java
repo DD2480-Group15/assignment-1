@@ -228,6 +228,9 @@ class LicEvaluatorTest {
     void lic7() {
     }
 
+    /**
+     * Verifies that LIC8 returns false when a negative value for bPts is given.
+     */
     @Test
     void lic8_invalidInput() {
         LicEvaluator evaluator = new LicEvaluator();
@@ -245,6 +248,9 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic8(points.length, points, params));
     }
 
+    /**
+     * Verifies that LIC8 returns false when less then aPts+bPts+3 points are given.
+     */
     @Test
     void lic8_tooFewPoints() {
         LicEvaluator evaluator = new LicEvaluator();
@@ -260,6 +266,9 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic8(points.length, points, params));
     }
 
+    /**
+     * Verifies that an instance that does not satisfy the conditions of LIC8 returns false.
+     */
     @Test
     void lic8_returnsFalse() {
         LicEvaluator evaluator = new LicEvaluator();
@@ -280,6 +289,9 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic8(points.length, points, params));
     }
 
+    /**
+     * Verifies that an instance that satisfies the conditions of LIC8 returns true.
+     */
     @Test
     void lic8_returnsTrue() {
         LicEvaluator evaluator = new LicEvaluator();
