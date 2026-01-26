@@ -116,7 +116,7 @@ public class LicEvaluator {
     public boolean Lic8(int numPoints, Point[] pt, Parameters params) {
         int aPts = params.aPts(), bPts = params.bPts();
         double radius1 = params.radius1();
-        if (numPoints < 5 || aPts < 1 || bPts < 1 || aPts+bPts > numPoints-3) { return false; }
+        if (numPoints < 5 || aPts < 1 || bPts < 1 || aPts+bPts > numPoints-3 || radius1 < 0) { return false; }
 
         for (int i = 0; i < numPoints-aPts-bPts-2; i++) {
             Point p1 = pt[i], p2 = pt[i+aPts+1], p3 = pt[i + aPts+1 + bPts+1];
