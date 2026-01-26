@@ -130,6 +130,10 @@ public class LicEvaluator {
             return false;
         } 
 
+        if(dist > 0){
+            return false;
+        }
+
         for (int i = 0; i <= numpoints - nPts; i++) {
             Point first_pt = pt[i];
             Point last_pt = pt[i + nPts - 1];  
