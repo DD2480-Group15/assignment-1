@@ -485,7 +485,7 @@ public class LicEvaluator {
         int e_pts = params.ePts();
         int f_pts = params.fPts();
 
-        if(!(numpoints >= 5 && area2 >= 0 && e_pts >= 1 && f_pts >= 1)) return false;
+        if(!(numpoints >= 5 && area1 >= 0 && area2 >= 0 && e_pts >= 1 && f_pts >= 1)) return false;
         
         boolean isGreaterThanArea1 = false;
         boolean isLessThanArea2 = false;

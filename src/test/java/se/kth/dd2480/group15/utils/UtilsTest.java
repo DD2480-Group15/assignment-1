@@ -126,7 +126,7 @@ class UtilsTest {
         Point p2 = new Point(4, 0);
         Point p3 = new Point(0, 3);
         // Area = (4 * 3) / 2 = 6.0
-        assertEquals(6.0, Utils.getTriangleArea(p1, p2, p3), 0.00001); //(expected, actual, error margin)
+        assertEquals(6.0, Utils.getTriangleArea(p1, p2, p3), TEST_PRECISION); //(expected, actual, error margin)
     }
 
     /**
@@ -138,7 +138,7 @@ class UtilsTest {
         Point p2 = new Point(1, 1);
         Point p3 = new Point(2, 2);
         // Area should be exactly 0.0 for collinear points
-        assertEquals(0.0, Utils.getTriangleArea(p1, p2, p3), 0.00001); //(expected, actual, error margin)
+        assertEquals(0.0, Utils.getTriangleArea(p1, p2, p3), TEST_PRECISION); //(expected, actual, error margin)
     }
     
     /**
