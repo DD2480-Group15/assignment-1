@@ -19,10 +19,10 @@ class LicEvaluatorTest {
         LicEvaluator evaluator = new LicEvaluator();
 
         Point[] points = {new Point(1,1), new Point(4,5)};
-        double length1 = 3.0;
+        Parameters params = Parameters.builder().length1(3.0).build();
         int numpoints = 2;
 
-        assertTrue(evaluator.Lic0(numpoints, points, length1));
+        assertTrue(evaluator.Lic0(numpoints, points, params));
     }
 
     /**
@@ -37,10 +37,10 @@ class LicEvaluatorTest {
         LicEvaluator evaluator = new LicEvaluator();
 
         Point[] points = {new Point(1,1), new Point(4,5)};
-        double length1 = 6.0;
+        Parameters params = Parameters.builder().length1(6.0).build();
         int numpoints = 2;
 
-        assertFalse(evaluator.Lic0(numpoints, points, length1));
+        assertFalse(evaluator.Lic0(numpoints, points, params));
     }
 
     /**
@@ -55,10 +55,10 @@ class LicEvaluatorTest {
         LicEvaluator evaluator = new LicEvaluator();
 
         Point[] points = {new Point(1,1)};
-        double length1 = 2.0;
+        Parameters params = Parameters.builder().length1(2.0).build();
         int numpoints = 1;
 
-        assertFalse(evaluator.Lic0(numpoints, points, length1));
+        assertFalse(evaluator.Lic0(numpoints, points, params));
     }
 
     /**
@@ -191,10 +191,9 @@ class LicEvaluatorTest {
             new Point(2,0),
             new Point(2,2)
         };
+        Parameters params = Parameters.builder().area1(1.0).build();
         
-        double area1 = 1.0;
-
-        assertTrue(evaluator.Lic3(points.length, points, area1));
+        assertTrue(evaluator.Lic3(points.length, points, params));
     }
 
     /**
@@ -210,10 +209,9 @@ class LicEvaluatorTest {
             new Point(2,0),
             new Point(2,2)
         };
+        Parameters params = Parameters.builder().area1(2.0).build();
 
-        double area1 = 2.0;
-
-        assertFalse(evaluator.Lic3(points.length, points, area1));
+        assertFalse(evaluator.Lic3(points.length, points, params));
 
     }
 
@@ -230,11 +228,10 @@ class LicEvaluatorTest {
             new Point(1,0),
             new Point(2,0)
         };
-
-        double area1 = 0.0;
+        Parameters params = Parameters.builder().area1(0.0).build();
 
         // 0 > 0 is false
-        assertFalse(evaluator.Lic3(points.length, points, area1));
+        assertFalse(evaluator.Lic3(points.length, points, params));
     }
 
     /**
@@ -340,10 +337,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(2,3), new Point(4,0)};
         int numpoints = 3;
-        int nPts = 3;
-        double dist = 2.0;
+        Parameters params = Parameters.builder().nPts(3).dist(2.0).build();
 
-        assertTrue(evaluator.Lic6(numpoints, points, nPts, dist));
+        assertTrue(evaluator.Lic6(numpoints, points, params));
     }
 
     /**
@@ -359,10 +355,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(2,1), new Point(4,0)};
         int numpoints = 3;
-        int nPts = 3;
-        double dist = 2.0;
+        Parameters params = Parameters.builder().nPts(3).dist(2.0).build();
 
-        assertFalse(evaluator.Lic6(numpoints, points, nPts, dist));
+        assertFalse(evaluator.Lic6(numpoints, points, params));
     }
 
     /**
@@ -378,10 +373,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(5,5)};
         int numpoints = 2;
-        int nPts = 3;
-        double dist = 2.0;
+        Parameters params = Parameters.builder().nPts(3).dist(2.0).build();
 
-        assertFalse(evaluator.Lic6(numpoints, points, nPts, dist));
+        assertFalse(evaluator.Lic6(numpoints, points, params));
     }
 
     /**
@@ -398,10 +392,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(1,1), new Point(5,0)};
         int numpoints = 3;
-        int kPts = 1;
-        double length1 = 4.0;
+        Parameters params = Parameters.builder().kPts(1).length1(4.0).build();
 
-        assertTrue(evaluator.Lic7(numpoints, points, kPts, length1));
+        assertTrue(evaluator.Lic7(numpoints, points, params));
     }
 
     /**
@@ -418,10 +411,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(1,1), new Point(3,0)};
         int numpoints = 3;
-        int kPts = 1;
-        double length1 = 4.0;
+        Parameters params = Parameters.builder().kPts(1).length1(4.0).build();
 
-        assertFalse(evaluator.Lic7(numpoints, points, kPts, length1));
+        assertFalse(evaluator.Lic7(numpoints, points, params));
     }
 
     /**
@@ -438,10 +430,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(5,5)};
         int numpoints = 2;
-        int kPts = 1;
-        double length1 = 1.0;
+        Parameters params = Parameters.builder().kPts(1).length1(1.0).build();
 
-        assertFalse(evaluator.Lic7(numpoints, points, kPts, length1));
+        assertFalse(evaluator.Lic7(numpoints, points, params));
     }
 
     /**
@@ -712,7 +703,8 @@ class LicEvaluatorTest {
         // Test case where there are two points separated by G_PTS with decreasing x-coordinates
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(5, 6), new Point(2, 5), new Point(2, 7)};
         LicEvaluator evaluator = new LicEvaluator();
-        assertTrue(evaluator.Lic11(5, points, 2));
+        Parameters params = Parameters.builder().gPts(2).build();
+        assertTrue(evaluator.Lic11(5, points, params));
     }
 
     @Test
@@ -720,7 +712,8 @@ class LicEvaluatorTest {
         // Test case where there are no two points separated by G_PTS with decreasing x-coordinates
         Point[] points = {new Point(1, 2), new Point(2, 4), new Point(1, 5), new Point(4, 6), new Point(5, 7)};
         LicEvaluator evaluator = new LicEvaluator();
-        assertFalse(evaluator.Lic11(5, points, 2));
+        Parameters params = Parameters.builder().gPts(2).build();
+        assertFalse(evaluator.Lic11(5, points, params));
     }
 
     @Test
@@ -728,7 +721,8 @@ class LicEvaluatorTest {
         // not meet 1 ≤G_PTS ≤NUMPOINTS−2
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(5, 6)};
         LicEvaluator evaluator = new LicEvaluator();
-        assertFalse(evaluator.Lic11(3, points, 2));
+        Parameters params = Parameters.builder().gPts(2).build();
+        assertFalse(evaluator.Lic11(3, points, params));
     }
 
     @Test
@@ -736,7 +730,8 @@ class LicEvaluatorTest {
         // Test case where NUMPOINTS < 3
         Point[] points = {new Point(1, 2), new Point(3, 4)};
         LicEvaluator evaluator = new LicEvaluator();
-        assertFalse(evaluator.Lic11(2, points, 1));
+        Parameters params = Parameters.builder().gPts(1).build();
+        assertFalse(evaluator.Lic11(2, points, params));
     }
 
     /**
@@ -755,11 +750,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(1,1), new Point(5,0), new Point(2,1)};
         int numpoints = 4;
-        int kPts = 1;
-        double length1 = 4.0;
-        double length2 = 2.0;
+        Parameters params = Parameters.builder().kPts(1).length1(4.0).length2(2.0).build();
 
-        assertTrue(evaluator.Lic12(numpoints, points, kPts, length1, length2));
+        assertTrue(evaluator.Lic12(numpoints, points, params));
     }
 
     /**
@@ -776,11 +769,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(0,0), new Point(5,0), new Point(5,0)};
         int numpoints = 4;
-        int kPts = 1;
-        double length1 = 4.0;
-        double length2 = 2.0;
+        Parameters params = Parameters.builder().kPts(1).length1(4.0).length2(2.0).build();
 
-        assertFalse(evaluator.Lic12(numpoints, points, kPts, length1, length2));
+        assertFalse(evaluator.Lic12(numpoints, points, params));
 
     }
 
@@ -798,11 +789,9 @@ class LicEvaluatorTest {
 
         Point[] points = {new Point(0,0), new Point(5,5)};
         int numpoints = 2;
-        int kPts = 1;
-        double length1 = 1.0;
-        double length2 = 10.0;
+        Parameters params = Parameters.builder().kPts(1).length1(1.0).length2(10.0).build();
 
-        assertFalse(evaluator.Lic12(numpoints, points, kPts, length1, length2));
+        assertFalse(evaluator.Lic12(numpoints, points, params));
     }
 
     /**
