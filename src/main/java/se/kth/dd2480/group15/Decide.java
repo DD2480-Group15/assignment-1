@@ -5,6 +5,7 @@ import se.kth.dd2480.group15.model.Evaluator;
 import se.kth.dd2480.group15.model.LicEvaluator;
 import se.kth.dd2480.group15.model.Parameters;
 import se.kth.dd2480.group15.model.Point;
+import se.kth.dd2480.group15.utils.Utils;
 
 public class Decide {
 
@@ -49,7 +50,11 @@ public class Decide {
         FUV = evaluator2.evaluateFUV(PUM, PUV);
 
         // Decision: Launch or No Launch
-        boolean launch = false;
+        boolean launch = evaluator2.evaluateLAUNCH(FUV);
+        if(launch) 
+            System.out.println("YES");
+        else 
+            System.out.println("NO");
     }
 
 }
