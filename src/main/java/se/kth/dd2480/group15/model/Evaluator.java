@@ -1,5 +1,7 @@
 package se.kth.dd2480.group15.model;
 
+import se.kth.dd2480.group15.utils.Utils;
+
 public class Evaluator {
 
     public static final double PI = 3.1415926535;
@@ -33,5 +35,24 @@ public class Evaluator {
         }
 
         return PUM;
+    }   
+
+    /**
+     * Compute the Final Unlocking Vector (FUV) based on the Preliminary Unlocking Matrix (PUM) and the Preliminary Unlocking Vector (PUV).
+     * FUV[i] is set to true if PUV[i] is false or if all values in row i of PUM are true. Otherwise, FUV[i] is set to false.
+     * 
+     * @param PUM       A 2D boolean array representing the Preliminary Unlocking Matrix (PUM).
+     * @param PUV       A boolean array representing the Preliminary Unlocking Vector (PUV).
+     * @return A 1D boolean array representing the Final Unlocking Vector (FUV).
+     */
+    public boolean[] evaluateFUV(boolean[][] PUM, boolean[] PUV) {
+        boolean[] FUV = new boolean[15];
+        for(int i=0; i<15; i++){
+            if(PUV[i] == false || Utils.allTrue(PUM[i]))
+                FUV[i] = true;
+            else
+                FUV[i] = false;
+        }
+        return FUV;
     }   
 }

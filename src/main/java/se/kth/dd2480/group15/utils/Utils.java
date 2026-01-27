@@ -111,4 +111,19 @@ public class Utils {
 
         return area;
     }
+
+    /**
+     * Checks if all boolean values of the PUV in the given row are true.
+     *
+     * @param arr the boolean array to check
+     * @return true if all values are true, false otherwise
+     */    
+    public static boolean allTrue(boolean[] arr) {
+        for (boolean b : arr) {
+            if (!b)
+                return false;
+        }
+        return true;
+    }
 }
+

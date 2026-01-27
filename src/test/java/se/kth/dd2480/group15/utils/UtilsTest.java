@@ -140,4 +140,24 @@ class UtilsTest {
         // Area should be exactly 0.0 for collinear points
         assertEquals(0.0, Utils.getTriangleArea(p1, p2, p3), 0.00001); //(expected, actual, error margin)
     }
+    
+    /**
+     * Verifies that allTrue returns true when all elements are true, and false otherwise.
+     */
+    @Test
+    void AllTrue_returnsTrue() {
+        boolean [] boolArray = {true, true, true};
+        boolean result = Utils.allTrue(boolArray);
+        assertTrue(result);
+    }
+
+    /**
+     * Verifies that allTrue returns false when at least one element is false.
+     */
+    @Test
+    void AllTrue_returnsFalse() {
+        boolean [] boolArray = {true, false, true};
+        boolean result = Utils.allTrue(boolArray);
+        assertFalse(result);
+    }
 }
