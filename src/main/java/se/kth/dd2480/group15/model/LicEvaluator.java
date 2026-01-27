@@ -487,8 +487,40 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic14() {
-        // TODO Implement functionality
+    /**
+     * Checks if:
+     * 1) There exists at least 1 set of 3 data points, separated by exactly e_pts and f_pts 
+     *    consecutive intervening points, respectively, that make up a triangle with area greater than area1.
+     * 2) There exists 3 data points (same as in req 1) or different) , separated by exactly 
+     *    e_pts and f_pts intervening points, that make up a triangle with area less than area2.
+     * Both requirements must be true for function to return true.
+     * (The condition is not met if numpoints < 5).
+     * @return
+     */
+    public boolean Lic14(int numpoints, Point[] pt, Parameters params) {
+        double area1 = params.area1();
+        double area2 = params.area2();
+        int e_pts = params.ePts();
+        int f_pts = params.fPts();
+
+        if(!(numpoints >= 5 && area1 >= 0 && area2 >= 0 && e_pts >= 1 && f_pts >= 1)) return false;
+        
+        boolean isGreaterThanArea1 = false;
+        boolean isLessThanArea2 = false;
+
+        for(int i = 0; i < numpoints - (e_pts + f_pts + 2); i++) {
+            Point p1 = pt[i];
+            Point p2 = pt[i + e_pts + 1];
+            Point p3 = pt[i + e_pts + f_pts + 2];
+
+            double area = Utils.getTriangleArea(p1, p2, p3);
+            // check each iteration
+            if (Utils.doubleCompare(area, area1) == CompType.GT) isGreaterThanArea1 = true;
+            if (Utils.doubleCompare(area, area2) == CompType.LT) isLessThanArea2 = true;
+            // as soon as both condition are found
+            if (isGreaterThanArea1 && isLessThanArea2) return true;
+        }
+
         return false;
     }
     

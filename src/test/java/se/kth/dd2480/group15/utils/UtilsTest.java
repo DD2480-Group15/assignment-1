@@ -72,6 +72,49 @@ class UtilsTest {
                 () -> Utils.angleAtVertex(p1, vertex, p3));
     }
 
+    /**
+     * Verifies that doubleCompare returns EQ when the two numbers are equal within precision.
+     */
+    @Test
+    void doubleCompare_equals_returnsEQ() {
+        double a = 1.0000001;
+        double b = 1.0000000;
+
+        assertEquals(CompType.EQ, Utils.doubleCompare(a, b));
+    }
+
+    /**
+     * Verifies that doubleCompare returns LT when the first number is smaller than the second.
+     */
+    @Test
+    void doubleCompare_lessThan_returnsLT() {
+        double a = 1.0000000;
+        double b = 2.0000000;
+
+        assertEquals(CompType.LT, Utils.doubleCompare(a, b));
+    }
+
+    /**
+     * Verifies that doubleCompare returns GT when the first number is greater than the second.
+     */
+    @Test
+    void doubleCompare_greaterThan_returnsGT() {
+        double a = 3.0000000;
+        double b = 2.0000000;
+
+        assertEquals(CompType.GT, Utils.doubleCompare(a, b));
+    }
+
+    /**
+     * Verifies that doubleCompare identifies numbers as not equal when their difference exceeds precision.
+     */
+    @Test
+    void doubleCompare_notEqualWithSlightDifference() {
+        double a = 1.000002;
+        double b = 1.000000;
+
+        assertEquals(CompType.GT, Utils.doubleCompare(a, b));
+    }
 
     /**
      * Verifies that collinear points return -1.
@@ -117,6 +160,30 @@ class UtilsTest {
         assertEquals(expected, radius, TEST_PRECISION);
     }
 
+    /**
+     * Verifies that the triangle area is calculated correctly for a right-angled triangle.
+     */
+    @Test
+    void getTriangleArea_standardTriangle_returnsCorrectArea() {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(4, 0);
+        Point p3 = new Point(0, 3);
+        // Area = (4 * 3) / 2 = 6.0
+        assertEquals(6.0, Utils.getTriangleArea(p1, p2, p3), TEST_PRECISION); //(expected, actual, error margin)
+    }
+
+    /**
+     * Verifies that the area is zero when all three points lie on the same straight line.
+     */
+    @Test
+    void getTriangleArea_collinearPoints_returnsZero() {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(1, 1);
+        Point p3 = new Point(2, 2);
+        // Area should be exactly 0.0 for collinear points
+        assertEquals(0.0, Utils.getTriangleArea(p1, p2, p3), TEST_PRECISION); //(expected, actual, error margin)
+    }
+    
     /**
      * Verifies that allTrue returns true when all elements are true, and false otherwise.
      */

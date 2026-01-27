@@ -878,8 +878,71 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic13(points.length, points, params));
     }
 
+    /**
+     * Positive test case
+     * A single triangle satisfies both area1 < area < area2 condition.
+     * Expecting the function to return true.
+     */
     @Test
-    void lic14() {
+    void lic14_sameTriangleSatisfiesBothConditions_returnsTrue() {
+        // Area of triangle below is 2.0.
+        // Condition: 2.0 > 1.0 (area1) AND 2.0 < 5.0 (area2)  = True
+        Parameters params = Parameters.builder().ePts(1).fPts(1).area1(1.0).area2(5.0).build();
+        Point[] points = {
+            new Point(0,0), // p1
+            new Point(0,0), // e_pts
+            new Point(2,0), // p2
+            new Point(0,0), // f_pts
+            new Point(0,2)  // p3
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertTrue(evaluator.Lic14(points.length, points, params));
+    }
+
+    /**
+     * Positive test case
+     * One triangle satisfies area > area1 and a different triangle satisfies area < area2.
+     * Expecting the function to return true.
+     */
+    @Test
+    void lic14_differentTrianglesSatisfyConditions_returnsTrue() {
+        // Triangles with ePts=1, fPts=1.
+        // Triangle 1, T1 (index 0, 2, 4): Area = 100.0 (> area1)
+        // Triangle 2, T2 (index 1, 3, 5): Area = 0.0 (< area2)
+        Parameters params = Parameters.builder()
+                .ePts(1).fPts(1).area1(50.0).area2(1.0).build();
+        Point[] points = {
+            new Point(0,0),   // T1-p1
+            new Point(0,0),   //    T2-p1
+            new Point(10,0),  // T1-p2
+            new Point(1,0),   //    T2-p2
+            new Point(0,20),  // T1-p3
+            new Point(2,0)    //    T2-p3 (Collinear with T2-p1-p2 = area 0)
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertTrue(evaluator.Lic14(points.length, points, params));
+    }
+
+    /**
+     * Negative test case
+     * Area > area1 is satisfied, but no triangle exists where area < area2.
+     * Expecting the function to return false.
+     */
+    @Test
+    void lic14_onlyOneConditionSatisfied_returnsFalse() {
+        // Area of triangle is 2.0.
+        // 2.0 > 1.0 (area1) = TRUE.
+        // 2.0 < 0.5 (area2) = FALSE.
+        Parameters params = Parameters.builder().ePts(1).fPts(1).area1(1.0).area2(0.5).build();
+        Point[] points = {
+            new Point(0,0), // p1
+            new Point(0,0), // e_pts
+            new Point(2,0), // p2
+            new Point(0,0), // f_pts
+            new Point(0,2)  // p3
+        };
+        LicEvaluator evaluator = new LicEvaluator();
+        assertFalse(evaluator.Lic14(points.length, points, params));
     }
 
     /**

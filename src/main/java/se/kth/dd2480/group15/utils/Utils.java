@@ -95,6 +95,24 @@ public class Utils {
     }
 
     /**
+     * Calculates the area of a triangle based on 3 coordinates
+     * Uses the "Shoelace formula": A = 1/2 * | x1(y2-y3) + x2(y3-y1) + x3(y1-y2)|
+     * 
+     * @param p1 The first point.
+     * @param p2 The second point.
+     * @param p3 The third point.
+     * @return the positive area of the triangle. If coordinates does not make up a triangle area is zero.
+     */
+    public static double getTriangleArea(Point p1, Point p2, Point p3){
+        double area = (0.5)*Math.abs(
+            (p1.x() * (p2.y()- p3.y())) + 
+            (p2.x() * (p3.y()- p1.y())) + 
+            (p3.x() * (p1.y()- p2.y())));
+
+        return area;
+    }
+
+    /**
      * Checks if all boolean values of the PUV in the given row are true.
      *
      * @param arr the boolean array to check
@@ -108,3 +126,4 @@ public class Utils {
         return true;
     }
 }
+
