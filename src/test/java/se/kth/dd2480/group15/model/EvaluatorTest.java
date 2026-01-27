@@ -312,4 +312,46 @@ class EvaluatorTest {
         boolean[] FUV = evaluator.evaluateFUV(PUM, PUV);
         assertFalse(FUV[1]);
     }
+
+    /**
+     * Verifies that {@code evaluateLAUNCH} returns {@code true} when the
+     * Final Unlocking Vector (FUV) has all elements set to {@code true}.
+     * <p>
+     * Test setup: FUV array is set to all {@code true}.
+     * Expected outcome: Launch should be {@code true}.
+     * </p>
+     */
+    @Test
+    void evaluateLAUNCH_ReturnsTrue() {
+        Evaluator evaluator = new Evaluator();
+        boolean[] FUV = new boolean[15];
+        for(int i=0; i<15; i++)
+            FUV[i] = true;    
+        
+        boolean launch = evaluator.evaluateLAUNCH(FUV);
+        assertTrue(launch);
+    }
+
+    /**
+     * Verifies that {@code evaluateLAUNCH} returns {@code false} when the
+     * Final Unlocking Vector (FUV) has one of the elements set to {@code false}.
+     * <p>
+     * Test setup: FUV array is set to {@code true} for odd indices and {@code false} for even indices.
+     * Expected outcome: Launch should be {@code false}.
+     * </p>
+     */
+    @Test
+    void evaluateLAUNCH_ReturnsFalse() {
+        Evaluator evaluator = new Evaluator();
+        boolean[] FUV = new boolean[15];
+        for(int i=0; i<15; i++){
+            if(i%2 == 0)
+                FUV[i] = false;    
+            else
+                FUV[i] = true; 
+        }
+        
+        boolean launch = evaluator.evaluateLAUNCH(FUV);
+        assertFalse(launch);
+    }
 }

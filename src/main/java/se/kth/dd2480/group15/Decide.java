@@ -7,7 +7,6 @@ import se.kth.dd2480.group15.model.Parameters;
 import se.kth.dd2480.group15.model.Point;
 import se.kth.dd2480.group15.utils.Utils;
 
-
 public class Decide {
 
     public static void main(String[] args) {
@@ -55,9 +54,11 @@ public class Decide {
         FUV = evaluator2.evaluateFUV(PUM, PUV);
 
         // Decision: Launch or No Launch
-        boolean launch = Utils.allTrue(FUV);
-        System.out.println(launch ? "YES" : "NO");
-       
+        boolean launch = evaluator2.evaluateLAUNCH(FUV);
+        if(launch) 
+            System.out.println("YES");
+        else 
+            System.out.println("NO");
     }
 
 }
