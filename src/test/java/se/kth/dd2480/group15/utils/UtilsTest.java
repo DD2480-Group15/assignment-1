@@ -161,6 +161,30 @@ class UtilsTest {
     }
 
     /**
+     * Verifies that the triangle area is calculated correctly for a right-angled triangle.
+     */
+    @Test
+    void getTriangleArea_standardTriangle_returnsCorrectArea() {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(4, 0);
+        Point p3 = new Point(0, 3);
+        // Area = (4 * 3) / 2 = 6.0
+        assertEquals(6.0, Utils.getTriangleArea(p1, p2, p3), TEST_PRECISION); //(expected, actual, error margin)
+    }
+
+    /**
+     * Verifies that the area is zero when all three points lie on the same straight line.
+     */
+    @Test
+    void getTriangleArea_collinearPoints_returnsZero() {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(1, 1);
+        Point p3 = new Point(2, 2);
+        // Area should be exactly 0.0 for collinear points
+        assertEquals(0.0, Utils.getTriangleArea(p1, p2, p3), TEST_PRECISION); //(expected, actual, error margin)
+    }
+    
+    /**
      * Verifies that allTrue returns true when all elements are true, and false otherwise.
      */
     @Test
