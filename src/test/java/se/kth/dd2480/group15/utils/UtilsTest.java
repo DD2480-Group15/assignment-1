@@ -72,6 +72,49 @@ class UtilsTest {
                 () -> Utils.angleAtVertex(p1, vertex, p3));
     }
 
+    /**
+     * Verifies that doubleCompare returns EQ when the two numbers are equal within precision.
+     */
+    @Test
+    void doubleCompare_equals_returnsEQ() {
+        double a = 1.0000001;
+        double b = 1.0000000;
+
+        assertEquals(CompType.EQ, Utils.doubleCompare(a, b));
+    }
+
+    /**
+     * Verifies that doubleCompare returns LT when the first number is smaller than the second.
+     */
+    @Test
+    void doubleCompare_lessThan_returnsLT() {
+        double a = 1.0000000;
+        double b = 2.0000000;
+
+        assertEquals(CompType.LT, Utils.doubleCompare(a, b));
+    }
+
+    /**
+     * Verifies that doubleCompare returns GT when the first number is greater than the second.
+     */
+    @Test
+    void doubleCompare_greaterThan_returnsGT() {
+        double a = 3.0000000;
+        double b = 2.0000000;
+
+        assertEquals(CompType.GT, Utils.doubleCompare(a, b));
+    }
+
+    /**
+     * Verifies that doubleCompare identifies numbers as not equal when their difference exceeds precision.
+     */
+    @Test
+    void doubleCompare_notEqualWithSlightDifference() {
+        double a = 1.000002;
+        double b = 1.000000;
+
+        assertEquals(CompType.GT, Utils.doubleCompare(a, b));
+    }
 
     /**
      * Verifies that collinear points return -1.
