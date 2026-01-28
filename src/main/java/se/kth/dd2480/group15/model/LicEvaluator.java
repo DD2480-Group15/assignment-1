@@ -1,10 +1,11 @@
 package se.kth.dd2480.group15.model;
 
+import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
+
 import java.util.Arrays;
 
 import se.kth.dd2480.group15.utils.CompType;
 import se.kth.dd2480.group15.utils.Utils;
-import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
 
 public class LicEvaluator {
 
@@ -37,6 +38,15 @@ public class LicEvaluator {
         return false;
     }
 
+    /**
+     * Checks if there exists at least one set of three consecutive data points that cannot all be contained
+     * within or on a circle of the specified radius.
+     * 
+     * @param numPoints The number of data points in the array.
+     * @param points An array containing the data points.
+     * @param params A Parameters object containing values for the radius1 parameter.
+     * @return true if there exists at least one set of points that fulfills the requirement above; otherwise false.
+     */
     public boolean Lic1(int numPoints, Point[] points, Parameters params) {
         if (params.radius1() < 0 || numPoints < 3) { return false; }
 
@@ -281,6 +291,16 @@ public class LicEvaluator {
         return false;
     }
 
+    /**
+     * Checks if there exists at least one set of three data points separated by exactly A_PTS and B_PTS
+     * consecutive intervening points, respectively, that cannot be contained within or on a circle of
+     * radius RADIUS1. The condition is not met when NUMPOINTS < 5.
+     * 
+     * @param numPoints The number of data points in the array.
+     * @param points An array containing the data points.
+     * @param params A Parameters object containing values for the aPts, bPts and radius1 parameters.
+     * @return true if there exists at least one set of points that fulfills the requirement above; otherwise false.
+     */
     public boolean Lic8(int numPoints, Point[] points, Parameters params) {
         int aPts = params.aPts(), bPts = params.bPts();
         double radius1 = params.radius1();
