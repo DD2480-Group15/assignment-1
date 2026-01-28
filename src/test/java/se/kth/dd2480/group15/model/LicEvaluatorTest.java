@@ -350,6 +350,7 @@ class LicEvaluatorTest {
      * between (0,0) and (4,0). Threshold (dist) is set to 2.0.
      * </p>
      */
+    @Test
     void lic6_invalidInput() {
         LicEvaluator evaluator = new LicEvaluator();
 
@@ -368,6 +369,7 @@ class LicEvaluatorTest {
      * the set required.
      * </p>
      */
+    @Test
     void lic6_numpoints_lessThanThree() {
         LicEvaluator evaluator = new LicEvaluator();
 
