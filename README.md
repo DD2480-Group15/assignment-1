@@ -54,6 +54,35 @@ something something
 
 
 ## Statement of contributions
-Filippa:
-* Implementation of LIC0, LIC6, LIC7, LIC12 and their corresponding tests
+
+#### Rasmus Sjöberg (rassjo@kth.se)
+* Created the GitHub organisation and repository, and created the project structure
+* Implemented the code corresponding to the “global declarations” (Point, Parameters, Connectors, CompType, doubleCompare)
+* Implement functionality, docs and tests for LIC2, 4, and 9
+* One of the three “main” test cases for the decide function
+
+#### Emma Tisell (etisell@kth.se)
+* Implement getCircleRadius() in Utils.java for determining the smallest enclosing circle + corresponding tests
+* Implement LIC1, 8, 13 + corresponding tests
+* Corresponding documentation (JavaDoc)
+* Code reviews + accepting pull requests
+
+#### Chih-Yun Liu (cyliu4@kth.se):
+* Implemented LIC 5, LIC11, evaluateLICs, evaluatePUM, evaluateFUV, and evaluateLAUNCH, and decide features
+* Implemented corresponding unit tests
+* Corresponding documentation (JavaDoc)
 * One of three main test cases
+* Code reviews + merging pull requests
+
+#### Filippa Ciuk Olsson (fico@kth.se):
+* Implementation of LIC0, LIC6, LIC7, LIC12 and their corresponding tests
+* One of three main test cases for Decide function
+* Corresponding documentation (JavaDoc)
+* Managed merge conflicts
+* Code reviews + merging pull requests
+
+#### Jacob Friedrich (jafr@kth.se):
+* Implemented LIC3, LIC10, LIC14
+* Implemented getTriangleArea method in Utils.java to handle geometric calculations
+* Implemented corresponding unit tests and documentation (JavaDoc)
+* Managed merge conflicts
