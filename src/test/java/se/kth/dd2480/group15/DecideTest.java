@@ -191,15 +191,9 @@ public class DecideTest {
             PUV[i] = false;
 
         //test
-        PrintStream originalOut = System.out;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(baos));
+        String decision = Decide.decide(LCM, PUV, coords, params, numPoints);
 
-        Decide.decide(LCM, PUV, coords, params, numPoints); 
-        System.setOut(originalOut);
-
-        String out = baos.toString().trim();
-        assertEquals("NO", out);
+        assertEquals("NO", decision);
     }
     
 }
