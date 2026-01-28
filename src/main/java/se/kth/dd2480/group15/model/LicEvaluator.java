@@ -107,10 +107,7 @@ public class LicEvaluator {
                 Point p3 = points[i+2];
 
                 // get positive area of a triangle from 3 coordinates
-                double area = (0.5)*Math.abs(
-                    (p1.x() * (p2.y()- p3.y())) + 
-                    (p2.x() * (p3.y()- p1.y())) + 
-                    (p3.x() * (p1.y()- p2.y())));
+                double area = Utils.getTriangleArea(p1, p2, p3);
                 
                 // if area > area1 
                 if (Utils.doubleCompare(area, area1) == CompType.GT) 
@@ -360,10 +357,7 @@ public class LicEvaluator {
             Point p3 = points[i + e_pts + f_pts + 2];
 
             // get positive area of a triangle from 3 coordinates
-            double area = (0.5)*Math.abs(
-                (p1.x() * (p2.y()- p3.y())) + 
-                (p2.x() * (p3.y()- p1.y())) + 
-                (p3.x() * (p1.y()- p2.y())));
+            double area = Utils.getTriangleArea(p1, p2, p3);
 
             // if area > area1 
             if (Utils.doubleCompare(area, area1) == CompType.GT) 
