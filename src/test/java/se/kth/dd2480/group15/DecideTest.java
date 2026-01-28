@@ -131,4 +131,75 @@ public class DecideTest {
 
         assertEquals("YES", decision);
     }
+    /**
+     * Verify that the decide function outputs "YES" ONLY when all relevant combinations of launch conditions are met.
+     * 
+     * This test validates the "NO" output scenario:
+     * LIC0 is false because the distance (~1.41) between (0,0) and (1,1) is not greater than length1 (2.0).
+     * LIC1 is flse because numpoints (2) is less than the required 3 points.
+     * The LCM links LIC0 and LIC1 with an ANDD operator. Since both CMV[0] and CMV[1] are false, PUM[0,1] is false.
+     * Since PUM[0,1] is false, FUV[0] is false. LAUNCH signal is "NO" since not all FUV elements are true.
+     * 
+     * </p>
+     * Configuration:
+     * Points: (0,0), (0,1)
+     * Parameters: length1=2, radius1=0.1, epsilon=0.1, area1=0.1, quads=1, dist=0.1, length2=100, radius2=100, area2=100, qPts=2, nPts=3,
+     * other parameters keep as default value 1.
+     * LCM: Set LCM[0, 1] to ANDD
+     * PUV: PUV[0] set to true, all other elements (1 through 14) to false       
+     * </p>
+     * Expected Output: "NO"
+     */
+    @Test
+    void decide_outputNO() {
+        Point[] coords = new Point[]{
+                new Point(0, 0),
+                new Point(1, 1)
+                //distance is ~1.41
+        };
+        int numPoints = coords.length; //2 < 3 => CMV[1] is false
+
+        Parameters params = Parameters.builder()
+                .length1(2) //1.31 < 2 => CMV[0] is false
+                .radius1(0.1)
+                .epsilon(0.1)
+                .area1(0.1)
+                .quads(1)
+                .dist(0.1)
+                .length2(100)
+                .radius2(100)
+                .area2(100)
+                .qPts(2)
+                .nPts(3)
+                .build();
+
+        Connectors[][] LCM = new Connectors[15][15];
+        for (int i = 0; i < 15; i++) 
+            for (int j = 0; j < 15; j++) 
+            {
+                    LCM[i][j] = Connectors.NOTUSED;
+            }
+
+        // PUM[0,1] is true iff both CMV[0] and CMV[1] are true
+        LCM[0][1] = Connectors.ANDD;
+        LCM[1][0] = Connectors.ANDD;
+
+        boolean[] PUV = new boolean[15];
+        PUV[0] = true; 
+
+        for (int i = 1; i < 15; i++)
+            PUV[i] = false;
+
+        //test
+        PrintStream originalOut = System.out;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(baos));
+
+        Decide.decide(LCM, PUV, coords, params, numPoints); 
+        System.setOut(originalOut);
+
+        String out = baos.toString().trim();
+        assertEquals("NO", out);
+    }
+    
 }
