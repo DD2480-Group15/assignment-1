@@ -154,16 +154,17 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic5(int numPoints, Point[] points) {
-        /* 
-        Input: n (integer, number of data points), 
-               points (arrays of Point containing the x and y coordinates of the data points)
+    /**
+     * Checks if there exists at least one set of two consecutive data points, (X[i],Y[i]) and (X[j],Y[j]), such
+     * that X[j] - X[i] < 0. (where i = j-1)
+     * <p>
+     * @param numPoints the number of data points in the array
+     * @param points an array containing the (x,y) coordinates for each point.
+     * @return {@code true} if there exists at least one set of two consecutive data points such that X[j] - X[i] < 0;
+     *         {@code false} otherwise.
+     */
 
-        Output: boolean (true if the condition is met, false otherwise)       
-        
-        Functionality: There exists at least one set of two consecutive data points, (X[i],Y[i]) and (X[j],Y[j]), such
-        that X[j] - X[i] < 0. (where i = j-1)
-        */
+    public boolean Lic5(int numPoints, Point[] points) {
 
         for(int i=1; i<numPoints; i++)
             if(points[i].x() - points[i-1].x() < 0)

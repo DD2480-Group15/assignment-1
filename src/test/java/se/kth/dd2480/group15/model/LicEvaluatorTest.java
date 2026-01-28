@@ -291,7 +291,9 @@ class LicEvaluatorTest {
 
     /**
      * Test case where there are two consecutive points with decreasing x-coordinates.
-     * Expecting the function to return true
+     * Expecting the function to return {@code true}
+     * <p>
+     * Test setup: 3 points (1,2), (3,4), (2,5) where points (3,4) and (2,5) have decreasing x-coordinates.
      */
     @Test
     void lic5_returnsTrue() {
@@ -302,7 +304,9 @@ class LicEvaluatorTest {
 
     /**
      * Test case where there are no two consecutive points with decreasing x-coordinates
-     * Expecting the function to return false
+     * Expecting the function to return {@code false}
+     * <p>
+     * Test setup: 3 points (1,2), (2,4), (3,6) where all points have increasing x-coordinates.
      */
     @Test
     void lic5_returnsFalse() {
@@ -313,7 +317,9 @@ class LicEvaluatorTest {
 
     /**
      * Test case with only one point.
-     * Expecting the function to return false
+     * Expecting the function to return {@code false}
+     * <p>
+     * Test setup: 1 point (5,2)
      */
     @Test
     void lic5_onePoint_returnsFalse() {
