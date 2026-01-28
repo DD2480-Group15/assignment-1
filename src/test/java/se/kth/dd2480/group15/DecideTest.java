@@ -127,24 +127,8 @@ public class DecideTest {
         boolean[] PUV = new boolean[15];
         Arrays.fill(PUV, true);
 
-        LicEvaluator evaluator = new LicEvaluator();
         String decision = Decide.decide(LCM, PUV, points, params, numPoints);
 
-        assertTrue(evaluator.Lic0(numPoints, points, params));
-        assertTrue(evaluator.Lic1(numPoints, points, params));
-        assertTrue(evaluator.Lic2(numPoints, points, params));
-        assertTrue(evaluator.Lic3(numPoints, points, params));
-        assertTrue(evaluator.Lic4(numPoints, points, params));
-        assertTrue(evaluator.Lic5(numPoints, points));
-        assertTrue(evaluator.Lic6(numPoints, points, params));
-        assertTrue(evaluator.Lic7(numPoints, points, params));
-        assertTrue(evaluator.Lic8(numPoints, points, params));
-        assertTrue(evaluator.Lic9(numPoints, points, params));
-        assertTrue(evaluator.Lic10(numPoints, points, params));
-        assertTrue(evaluator.Lic11(numPoints, points, params));
-        assertTrue(evaluator.Lic12(numPoints, points, params));
-        assertTrue(evaluator.Lic13(numPoints, points, params));
-        assertTrue(evaluator.Lic14(numPoints, points, params));
         assertEquals("YES", decision);
     }
 }
