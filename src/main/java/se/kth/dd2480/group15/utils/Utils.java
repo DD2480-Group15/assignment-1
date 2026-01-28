@@ -1,6 +1,7 @@
 package se.kth.dd2480.group15.utils;
 
 import se.kth.dd2480.group15.model.Point;
+import java.util.Arrays;
 
 /**
  * Collection of static utility methods used when checking LICs truth values.
@@ -57,7 +58,44 @@ public class Utils {
     }
 
     /**
-     * Computes the radius of the circle passing through all three given points.
+     * Computes the radius of the smallest circle that contains all three points.
+     * 
+     * @param p1 The first point.
+     * @param p2 The second point.
+     * @param p3 The third point.
+     * @return the radius of the smallest circle that contains all three points.
+     */
+    public static double getCircleRadius(Point p1, Point p2, Point p3) {
+        // Get all coordinates
+        double x1 = p1.x(), y1 = p1.y();
+        double x2 = p2.x(), y2 = p2.y();
+        double x3 = p3.x(), y3 = p3.y();
+
+        // Get side lengths
+        double d12 = Math.hypot(x1-x2, y1-y2);
+        double d13 = Math.hypot(x1-x3, y1-y3);
+        double d23 = Math.hypot(x2-x3, y2-y3);
+
+        // Get longest, middle and shortest side length
+        double[] values = {d12, d13, d23};
+        Arrays.sort(values);
+        double longest = values[2], mid = values[1], shortest = values[0];
+
+        double radius;
+        if (longest*longest >= mid*mid + shortest*shortest) {
+            // The three points make a right or obtuse triangle
+            radius = longest / 2;
+        }
+        else {
+            // The three points make an acute triangle
+            radius = getRadiusFrom3(p1, p2, p3);
+        }
+
+        return radius;
+    }
+
+    /**
+     *  Calculates the radius of the circle passing through all three given points.
      * 
      * @param p1 The first point.
      * @param p2 The second point.
@@ -65,7 +103,7 @@ public class Utils {
      * @return the radius of the circle constructed by the three points or -1 if 
      * no such circle can be constructed.
      */
-    public static double getCircleRadius(Point p1, Point p2, Point p3) {
+    private static double getRadiusFrom3(Point p1, Point p2, Point p3) {
         // Get all coordinates
         double x1 = p1.x(), y1 = p1.y();
         double x2 = p2.x(), y2 = p2.y();
