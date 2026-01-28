@@ -54,5 +54,16 @@ public class Evaluator {
                 FUV[i] = false;
         }
         return FUV;
-    }   
+    }  
+    
+    /**
+     * Determine whether to launch based on the Final Unlocking Vector (FUV).
+     * The launch decision is true if all elements in FUV are true; otherwise, it is false.
+     * 
+     * @param FUV   A boolean array representing the Final Unlocking Vector (FUV).
+     * @return A boolean indicating whether to launch (true) or not (false).
+     */
+    public boolean evaluateLAUNCH(boolean[] FUV) {
+        return Utils.allTrue(FUV);  
+    }
 }

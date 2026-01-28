@@ -497,21 +497,21 @@ public class LicEvaluator {
      * (The condition is not met if numpoints < 5).
      * @return
      */
-    public boolean Lic14(int numpoints, Point[] pt, Parameters params) {
+    public boolean Lic14(int numPoints, Point[] points, Parameters params) {
         double area1 = params.area1();
         double area2 = params.area2();
         int e_pts = params.ePts();
         int f_pts = params.fPts();
 
-        if(!(numpoints >= 5 && area1 >= 0 && area2 >= 0 && e_pts >= 1 && f_pts >= 1)) return false;
+        if(!(numPoints >= 5 && area1 >= 0 && area2 >= 0 && e_pts >= 1 && f_pts >= 1)) return false;
         
         boolean isGreaterThanArea1 = false;
         boolean isLessThanArea2 = false;
 
-        for(int i = 0; i < numpoints - (e_pts + f_pts + 2); i++) {
-            Point p1 = pt[i];
-            Point p2 = pt[i + e_pts + 1];
-            Point p3 = pt[i + e_pts + f_pts + 2];
+        for(int i = 0; i < numPoints - (e_pts + f_pts + 2); i++) {
+            Point p1 = points[i];
+            Point p2 = points[i + e_pts + 1];
+            Point p3 = points[i + e_pts + f_pts + 2];
 
             double area = Utils.getTriangleArea(p1, p2, p3);
             // check each iteration
@@ -548,7 +548,7 @@ public class LicEvaluator {
         results[11] = Lic11(numPoints, points, params);
         results[12] = Lic12(numPoints, points, params);
         results[13] = Lic13(numPoints, points, params);
-        results[14] = Lic14();
+        results[14] = Lic14(numPoints, points, params);
         return results;
     }
 }
