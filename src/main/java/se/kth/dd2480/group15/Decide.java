@@ -29,12 +29,16 @@ public class Decide {
         // Number of data points
         int numPoints = coords.length;
 
-        // Logical Connector Matrix
+        // get the LCM value by console input
         Connectors[][] LCM = new Connectors[15][15];
 
         // Preliminary Unlocking Vector
         boolean[] PUV = new boolean[15];
 
+        decide(LCM, PUV, coords, params, numPoints);
+    }
+
+    public static void decide(Connectors[][] LCM, boolean[] PUV, Point[] coords, Parameters params, int numPoints) {
         // Conditions Met Vector
         boolean[] CMV = new boolean[15];
         LicEvaluator evaluator = new LicEvaluator();
