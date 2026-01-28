@@ -81,7 +81,7 @@ something something
 * Managed merge conflicts
 * Code reviews + merging pull requests
 
-#### Jacob (jafr@kth.se):
+#### Jacob Friedrich (jafr@kth.se):
 * Implemented LIC3, LIC10, LIC14
 * Implemented getTriangleArea method in Utils.java to handle geometric calculations
 * Implemented corresponding unit tests and documentation (JavaDoc)
