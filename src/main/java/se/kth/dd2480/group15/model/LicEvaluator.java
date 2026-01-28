@@ -1,10 +1,9 @@
 package se.kth.dd2480.group15.model;
 
-import se.kth.dd2480.group15.utils.CompType;
-import se.kth.dd2480.group15.utils.Utils;
-
 import java.util.Arrays;
 
+import se.kth.dd2480.group15.utils.CompType;
+import se.kth.dd2480.group15.utils.Utils;
 import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
 
 public class LicEvaluator {
@@ -205,7 +204,7 @@ public class LicEvaluator {
             return false;
         } 
 
-        if(dist > 0){
+        if(dist < 0){
             return false;
         }
 
