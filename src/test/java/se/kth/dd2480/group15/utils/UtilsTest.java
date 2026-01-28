@@ -117,24 +117,25 @@ class UtilsTest {
     }
 
     /**
-     * Verifies that collinear points return -1.
+     * Verifies that collinear points return the correct radius.
      */
     @Test
     void getCircleRadius_collinearPoints() {
         Point p1 = new Point(0, 0);
-        Point p2 = new Point(1, 0);
-        Point p3 = new Point(2, 0);
+        Point p2 = new Point(2, 0);
+        Point p3 = new Point(6, 0);
 
         double radius = Utils.getCircleRadius(p1, p2, p3);
+        double expected = 3;
 
-        assertEquals(-1, radius, TEST_PRECISION);
+        assertEquals(expected, radius, TEST_PRECISION);
     }
 
     /**
-     * Verifies that the correct radius is calculated for a simple example
+     * Verifies that the correct radius is calculated for a set of points that make a right triangle.
      */
     @Test 
-    void getCircleRadius_simpleExample() {
+    void getCircleRadius_rightTriangle() {
         Point p1 = new Point(0, 0);
         Point p2 = new Point(4, 0);
         Point p3 = new Point(0, 3);
@@ -146,16 +147,61 @@ class UtilsTest {
     }
 
     /**
-     * Verifies that the correct radius is calculated for a set of points with non-vertical and non-horizontal lines
+     * Verifies that the correct radius is calculated for a set of points that make an acute triangle.
      */
     @Test
-    void getCircleRadius_nonVerticalnonHorizontal() {
-        Point p1 = new Point(1,2);
-        Point p2 = new Point(4,5);
-        Point p3 = new Point(6,3);
+    void getCircleRadius_acuteTriangle() {
+        Point p1 = new Point(0,4);
+        Point p2 = new Point(-2,0);
+        Point p3 = new Point(2,0);
 
         double radius = Utils.getCircleRadius(p1, p2, p3);
-        double expected = Math.sqrt((1-3.5)*(1-3.5) + (2-2.5)*(2-2.5));
+        double expected = 2.5;
+
+        assertEquals(expected, radius, TEST_PRECISION);
+    }
+
+    /**
+     * Verifies that the correct radius is calculated for a set of points that make an obtuse triangle.
+     */
+    @Test
+    void getCircleRadius_obtuseTriangle() {
+        Point p1 = new Point(1,4);
+        Point p2 = new Point(2,4);
+        Point p3 = new Point(3,3);
+
+        double radius = Utils.getCircleRadius(p1, p2, p3);
+        double expected = Math.sqrt((3-1)*(3-1) + (3-4)*(3-4)) / 2;
+
+        assertEquals(expected, radius, TEST_PRECISION);
+    }
+
+    /**
+     * Verifies that the correct radius is calculated if all three points coincide.
+     */
+    @Test
+    void getCircleRadius_threePointsCoincide() {
+        Point p1 = new Point(1,4);
+        Point p2 = new Point(1,4);
+        Point p3 = new Point(1,4);
+
+        double radius = Utils.getCircleRadius(p1, p2, p3);
+        double expected = 0;
+
+        assertEquals(expected, radius, TEST_PRECISION);
+    }
+
+     /**
+     * Verifies that the correct radius is calculated if two points coincide.
+     */
+    @Test
+    void getCircleRadius_twoPointsCoincide() {
+        Point p1 = new Point(1,4);
+        Point p2 = new Point(1,4);
+        Point p3 = new Point(5,2);
+
+        double radius = Utils.getCircleRadius(p1, p2, p3);
+        double expected = Math.sqrt((5-1)*(5-1) + (2-4)*(2-4)) / 2;
 
         assertEquals(expected, radius, TEST_PRECISION);
     }
