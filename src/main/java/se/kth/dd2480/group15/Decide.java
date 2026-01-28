@@ -5,6 +5,8 @@ import se.kth.dd2480.group15.model.Evaluator;
 import se.kth.dd2480.group15.model.LicEvaluator;
 import se.kth.dd2480.group15.model.Parameters;
 import se.kth.dd2480.group15.model.Point;
+import se.kth.dd2480.group15.utils.Utils;
+
 
 public class Decide {
 
@@ -28,12 +30,16 @@ public class Decide {
         // Number of data points
         int numPoints = coords.length;
 
-        // Logical Connector Matrix
+        // get the LCM value by console input
         Connectors[][] LCM = new Connectors[15][15];
 
         // Preliminary Unlocking Vector
         boolean[] PUV = new boolean[15];
 
+        decide(LCM, PUV, coords, params, numPoints);
+    }
+
+    public static void decide(Connectors[][] LCM, boolean[] PUV, Point[] coords, Parameters params, int numPoints) {
         // Conditions Met Vector
         boolean[] CMV = new boolean[15];
         LicEvaluator evaluator = new LicEvaluator();
@@ -49,7 +55,9 @@ public class Decide {
         FUV = evaluator2.evaluateFUV(PUM, PUV);
 
         // Decision: Launch or No Launch
-        boolean launch = false;
+        boolean launch = Utils.allTrue(FUV);
+        System.out.println(launch ? "YES" : "NO");
+       
     }
 
 }
