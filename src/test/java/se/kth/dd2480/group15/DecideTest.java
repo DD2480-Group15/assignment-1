@@ -2,15 +2,11 @@ package se.kth.dd2480.group15;
 
 import org.junit.jupiter.api.Test;
 import se.kth.dd2480.group15.model.Connectors;
-import se.kth.dd2480.group15.model.Evaluator;
-import se.kth.dd2480.group15.model.LicEvaluator;
 import se.kth.dd2480.group15.model.Parameters;
 import se.kth.dd2480.group15.model.Point;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 public class DecideTest {
 
@@ -58,28 +54,21 @@ public class DecideTest {
                 .build();
 
         Connectors[][] LCM = new Connectors[15][15];
-        for (int i = 0; i < 15; i++) 
-            for (int j = 0; j < 15; j++) 
-            {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
                 if(i == 6)
                     LCM[i][j] = Connectors.NOTUSED;
                 else
                     LCM[i][j] = Connectors.ORR;
             }
+        }
 
         boolean[] PUV = new boolean[15];
-        for (int i = 0; i < 15; i++)
-            PUV[i] = true;
+        for (int i = 0; i < 15; i++) PUV[i] = true;
 
         //test
-        PrintStream originalOut = System.out;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(baos));
+        String decision = Decide.decide(LCM, PUV, coords, params, numPoints);
 
-        Decide.decide(LCM, PUV, coords, params, numPoints); 
-        System.setOut(originalOut);  // always restore
-
-        String out = baos.toString().trim();
-        assertEquals("YES", out);
+        assertEquals("YES", decision);
     }
 }
