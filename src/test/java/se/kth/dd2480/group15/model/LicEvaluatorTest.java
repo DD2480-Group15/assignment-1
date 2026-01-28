@@ -291,7 +291,9 @@ class LicEvaluatorTest {
 
     /**
      * Test case where there are two consecutive points with decreasing x-coordinates.
-     * Expecting the function to return true
+     * Expecting the function to return {@code true}
+     * <p>
+     * Test setup: 3 points (1,2), (3,4), (2,5) where points (3,4) and (2,5) have decreasing x-coordinates.
      */
     @Test
     void lic5_returnsTrue() {
@@ -302,7 +304,9 @@ class LicEvaluatorTest {
 
     /**
      * Test case where there are no two consecutive points with decreasing x-coordinates
-     * Expecting the function to return false
+     * Expecting the function to return {@code false}
+     * <p>
+     * Test setup: 3 points (1,2), (2,4), (3,6) where all points have increasing x-coordinates.
      */
     @Test
     void lic5_returnsFalse() {
@@ -313,7 +317,9 @@ class LicEvaluatorTest {
 
     /**
      * Test case with only one point.
-     * Expecting the function to return false
+     * Expecting the function to return {@code false}
+     * <p>
+     * Test setup: 1 point (5,2)
      */
     @Test
     void lic5_onePoint_returnsFalse() {
@@ -699,25 +705,39 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic10(points.length, points, params));
     }
 
-    //LIC11
+    /**
+     * Test that {@code Lic11} returns {@code true} when there are 
+     * two points separated by G_PTS with decreasing x-coordinates.
+     * <p>
+     * Test setup: 5 points (1,2), (3,4), (5,6), (2,5), (2,7) where points (5,6) and (2,5) have decreasing x-coordinates
+     */
     @Test
     void lic11_returnsTure() {
-        // Test case where there are two points separated by G_PTS with decreasing x-coordinates
         Point[] points = {new Point(1, 2), new Point(3, 4), new Point(5, 6), new Point(2, 5), new Point(2, 7)};
         LicEvaluator evaluator = new LicEvaluator();
         Parameters params = Parameters.builder().gPts(2).build();
         assertTrue(evaluator.Lic11(5, points, params));
     }
 
+    /**
+     * Test that {@code Lic11} returns {@code false} when there are 
+     * no two points separated by G_PTS with decreasing x-coordinates.
+     * <p>
+     * Test setup: 5 points (1,2), (2,4), (1,5), (4,6), (5,7) where all points have increasing x-coordinates.
+     */
     @Test
     void lic11_returnsFalse() {
-        // Test case where there are no two points separated by G_PTS with decreasing x-coordinates
         Point[] points = {new Point(1, 2), new Point(2, 4), new Point(1, 5), new Point(4, 6), new Point(5, 7)};
         LicEvaluator evaluator = new LicEvaluator();
         Parameters params = Parameters.builder().gPts(2).build();
         assertFalse(evaluator.Lic11(5, points, params));
     }
 
+    /**
+     * Test that {@code Lic11} returns {@code false} when G_PTS is out of range.
+     * <p>
+     * Test setup: 3 points (1,2), (3,4), (5,6)
+     */
     @Test
     void lic11_GptsOutofRange_returnsFalse() {
         // not meet 1 ≤G_PTS ≤NUMPOINTS−2
@@ -727,6 +747,11 @@ class LicEvaluatorTest {
         assertFalse(evaluator.Lic11(3, points, params));
     }
 
+    /**
+     * Test that {@code Lic11} returns {@code false} where there are less than 3 points.
+     * <p>
+     * Test setup: 2 points (1,2), (3,4)
+     */
     @Test
     void lic11_numPointsLessThan_returnsFalse() {
         // Test case where NUMPOINTS < 3

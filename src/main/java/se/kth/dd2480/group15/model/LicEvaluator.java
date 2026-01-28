@@ -1,11 +1,17 @@
 package se.kth.dd2480.group15.model;
 
+import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
+
 import java.util.Arrays;
 
 import se.kth.dd2480.group15.utils.CompType;
 import se.kth.dd2480.group15.utils.Utils;
-import static se.kth.dd2480.group15.utils.Utils.doubleCompare;
 
+/**
+ * This class contains methods to evaluate the Launch Interceptor Conditions (LICs) idependently and also evaluate all LICs.
+ * <p>
+ * @param PI The mathematical constant π (pi) for global use in LIC evaluations.
+ */
 public class LicEvaluator {
 
     public static final double PI = 3.1415926535;
@@ -37,6 +43,15 @@ public class LicEvaluator {
         return false;
     }
 
+    /**
+     * Checks if there exists at least one set of three consecutive data points that cannot all be contained
+     * within or on a circle of the specified radius.
+     * 
+     * @param numPoints The number of data points in the array.
+     * @param points An array containing the data points.
+     * @param params A Parameters object containing values for the radius1 parameter.
+     * @return true if there exists at least one set of points that fulfills the requirement above; otherwise false.
+     */
     public boolean Lic1(int numPoints, Point[] points, Parameters params) {
         if (params.radius1() < 0 || numPoints < 3) { return false; }
 
@@ -154,16 +169,17 @@ public class LicEvaluator {
         return false;
     }
 
-    public boolean Lic5(int numPoints, Point[] points) {
-        /* 
-        Input: n (integer, number of data points), 
-               points (arrays of Point containing the x and y coordinates of the data points)
+    /**
+     * Checks if there exists at least one set of two consecutive data points, (X[i],Y[i]) and (X[j],Y[j]), such
+     * that X[j] - X[i] < 0. (where i = j-1)
+     * <p>
+     * @param numPoints the number of data points in the array
+     * @param points an array containing the (x,y) coordinates for each point.
+     * @return {@code true} if there exists at least one set of two consecutive data points such that X[j] - X[i] < 0;
+     *         {@code false} otherwise.
+     */
 
-        Output: boolean (true if the condition is met, false otherwise)       
-        
-        Functionality: There exists at least one set of two consecutive data points, (X[i],Y[i]) and (X[j],Y[j]), such
-        that X[j] - X[i] < 0. (where i = j-1)
-        */
+    public boolean Lic5(int numPoints, Point[] points) {
 
         for(int i=1; i<numPoints; i++)
             if(points[i].x() - points[i-1].x() < 0)
@@ -281,6 +297,16 @@ public class LicEvaluator {
         return false;
     }
 
+    /**
+     * Checks if there exists at least one set of three data points separated by exactly A_PTS and B_PTS
+     * consecutive intervening points, respectively, that cannot be contained within or on a circle of
+     * radius RADIUS1. The condition is not met when NUMPOINTS < 5.
+     * 
+     * @param numPoints The number of data points in the array.
+     * @param points An array containing the data points.
+     * @param params A Parameters object containing values for the aPts, bPts and radius1 parameters.
+     * @return true if there exists at least one set of points that fulfills the requirement above; otherwise false.
+     */
     public boolean Lic8(int numPoints, Point[] points, Parameters params) {
         int aPts = params.aPts(), bPts = params.bPts();
         double radius1 = params.radius1();
