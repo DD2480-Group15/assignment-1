@@ -35,10 +35,10 @@ public class Decide {
         // Preliminary Unlocking Vector
         boolean[] PUV = new boolean[15];
 
-        decide(LCM, PUV, coords, params, numPoints);
+        System.out.println(decide(LCM, PUV, coords, params, numPoints));;
     }
 
-    public static void decide(Connectors[][] LCM, boolean[] PUV, Point[] coords, Parameters params, int numPoints) {
+    public static String decide(Connectors[][] LCM, boolean[] PUV, Point[] coords, Parameters params, int numPoints) {
         // Conditions Met Vector
         boolean[] CMV = new boolean[15];
         LicEvaluator evaluator = new LicEvaluator();
@@ -55,10 +55,7 @@ public class Decide {
 
         // Decision: Launch or No Launch
         boolean launch = evaluator2.evaluateLAUNCH(FUV);
-        if(launch) 
-            System.out.println("YES");
-        else 
-            System.out.println("NO");
-    }
 
+        return launch ? "YES" : "NO";
+    }
 }
