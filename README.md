@@ -54,5 +54,6 @@ something something
 
 
 ## Statement of contributions
-
-* 
+Filippa:
+* Implementation of LIC0, LIC6, LIC7, LIC12 and their corresponding tests
+* One of three main test cases
