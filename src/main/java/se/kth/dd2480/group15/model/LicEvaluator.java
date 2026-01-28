@@ -7,6 +7,11 @@ import java.util.Arrays;
 import se.kth.dd2480.group15.utils.CompType;
 import se.kth.dd2480.group15.utils.Utils;
 
+/**
+ * This class contains methods to evaluate the Launch Interceptor Conditions (LICs) idependently and also evaluate all LICs.
+ * <p>
+ * @param PI The mathematical constant π (pi) for global use in LIC evaluations.
+ */
 public class LicEvaluator {
 
     public static final double PI = 3.1415926535;
