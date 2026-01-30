@@ -36,20 +36,6 @@ mvn test
 mvn exec:java -Dexec.mainClass="se.kth.dd2480.group15.Decide"
 ```
 
-## How to generate documentation for the source code
-
-#### 1. Compile
-
-```
-mvn compile
-```
-
-#### 2. Generate 
-
-```
-mvn javadoc:javadoc
-```
-
 ## Statement of contributions
 
 #### Rasmus Sjöberg (rassjo@kth.se)
